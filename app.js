@@ -166,7 +166,7 @@ function renderDiscover() {
       <!-- Hero Section -->
       <section class="relative h-[500px] flex items-center justify-center overflow-hidden rounded-b-[60px] md:rounded-b-[100px]">
         <div class="absolute inset-0 z-0">
-          <img src="https://picsum.photos/seed/bookshelf/1920/1080?blur=5" class="w-full h-full object-cover opacity-20" />
+          <img src="https://picsum.photos/seed/bookshelf/1920/1080?blur=5" class="w-full h-full object-cover opacity-50" />
           <div class="absolute inset-0 bg-gradient-to-b from-[#0f172a] via-[#0f172a]/80 to-[#0f172a]"></div>
         </div>
         <div class="relative z-10 text-center space-y-8 px-6 max-w-3xl">

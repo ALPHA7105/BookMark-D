@@ -1,6 +1,6 @@
 
 import { INITIAL_BOOKS, MOOD_STORIES, MOCK_USER, THEME_CONFIG } from './constants.js';
-import { generateStoryPreview, generateInteractiveChapter, generateChapterAudio, getWordDefinition } from './geminiService.js';
+import { generateStoryPreview, generateInteractiveChapter, getWordDefinition } from './geminiService.js';
 
 // --- State ---
 let state = {

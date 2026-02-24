@@ -1,32 +1,22 @@
-// geminiService.js
-
-async function callBackend(endpoint, payload) {
-    const response = await fetch(endpoint, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
+async function callAI(prompt, systemInstruction = null) {
+    const response = await fetch('/api/ai', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ prompt, system_instruction: systemInstruction })
     });
-    if (!response.ok) throw new Error("Backend failed");
-    return await response.json();
+    const data = await response.json();
+    // Return the content parsed from the Ollama response format
+    return JSON.parse(data.choices[0].message.content);
 }
 
 export async function generateStoryPreview(title, author, vibe) {
-    const prompt = `Generate an interactive preview for the book "${title}" by ${author}. Vibe: "${vibe}". Provide a snappy summary, a shocking potential plot twist, and a Gen-Z style vibe rating.`;
-    
-    return await callBackend("/api/preview", { prompt });
+    const prompt = `Generate an interactive preview for "${title}" by ${author}. Vibe: "${vibe}". Provide a snappy summary, a shocking potential plot twist, and a Gen-Z vibe rating.`;
+    return await callAI(prompt);
 }
 
-export async function generateInteractiveChapter(title, context, isLastChapter, readingLevel = 'Standard', choice) {
-    // Keep your style logic here
-    let styleInstruction = `Use ${readingLevel} vocabulary.`; 
-    
+export async function generateInteractiveChapter(title, context, isLastChapter, readingLevel, choice) {
     const prompt = isLastChapter 
-        ? `Conclude the story for "${title}". Choice: ${choice}.` 
-        : `Continue the story for "${title}". Choice: ${choice}. Context: ${context.slice(-1000)}`;
-
-    return await callBackend("/api/chapter", { prompt, style: styleInstruction });
+        ? `Conclude "${title}". Reader choice: "${choice}".`
+        : `Continue "${title}". Reader choice: "${choice}". Context: ${context.slice(-1000)}`;
+    return await callAI(prompt);
 }
-
-// Note: Audio (TTS) is harder on Ollama. 
-// I suggest skipping generateChapterAudio for the prototype 
-// unless your Ollama provider specifically supports it.

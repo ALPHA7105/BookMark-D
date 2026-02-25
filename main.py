@@ -32,7 +32,7 @@ def ai_proxy():
     system_content = data.get("system_instruction", CLASSIC_INSTRUCTION)
 
     payload = {
-        "model": "gemini-3-flash-preview",
+        "model": "deepseek-r1:8b",
         "messages": [
             {"role": "system", "content": system_content},
             {"role": "user", "content": user_prompt}

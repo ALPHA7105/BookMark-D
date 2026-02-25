@@ -24,60 +24,31 @@ def home():
 
 @app.route('/api/ai', methods=['POST'])
 def ai_proxy():
+    if not OLLAMA_API_KEY:
+        return jsonify({"error": "API Key missing"}), 500
+
     data = request.json
     user_prompt = data.get("prompt", "")
-    
-    # FORCE the model to behave by giving it a template in the prompt
-    rich_prompt = f"""
-    {user_prompt}
-    
-    IMPORTANT: You are a JSON-only assistant. 
-    Respond ONLY with a valid JSON object. No thinking, no markdown tags.
-    Format:
-    {{
-      "summary": "string",
-      "plotTwist": "string",
-      "vibeRating": "string",
-      "content": "string",
-      "choices": [ {{"text": "string", "impact": "string"}} ],
-      "isEnding": false
-    }}
-    """
+    system_content = data.get("system_instruction", CLASSIC_INSTRUCTION)
 
     payload = {
-        "model": "deepseek-r1:8b",
-        "messages": [{"role": "user", "content": rich_prompt}],
-        "temperature": 0.2, # Lower = more predictable JSON
+        "model": "llama3.2:1b", # Switch to Llama 3 for 5x faster speed
+        "messages": [
+            {"role": "system", "content": "You are a JSON-only assistant for a book app. Respond ONLY with valid JSON."},
+            {"role": "user", "content": user_prompt}
+        ],
+        "temperature": 0.7,
         "stream": False
     }
 
     try:
-        response = requests.post(OLLAMA_URL, 
-                                 headers={"Authorization": f"Bearer {OLLAMA_API_KEY}"}, 
-                                 json=payload, 
-                                 timeout=30)
+        response = requests.post(OLLAMA_URL, headers=headers, json=payload, timeout=20)
+        res_data = response.json()
         
-        full_res = response.json()
-        raw_content = full_res['choices'][0]['message']['content']
-        
-        # 1. Strip <think> tags
-        clean_content = re.sub(r'<think>.*?</think>', '', raw_content, flags=re.DOTALL).strip()
-        
-        # 2. Strip Markdown code blocks (```json ... ```) if the AI added them
-        clean_content = re.sub(r'```json|```', '', clean_content).strip()
-
-        # 3. Try to parse it to ensure it's valid JSON for the frontend
-        try:
-            parsed_json = json.loads(clean_content)
-            # Re-wrap in the format your app.js expects
-            return jsonify({"choices": [{"message": {"content": json.dumps(parsed_json)}}]})
-        except:
-            # Fallback if AI output is garbage
-            return jsonify({"choices": [{"message": {"content": '{"summary": "Error parsing AI response.", "vibeRating": "Vibe: Broken 💀"}'}}]})
-
+        # Llama 3 won't have <think> tags, so we just send it straight
+        return jsonify(res_data)
     except Exception as e:
-        print(f"Backend Error: {e}")
-        return jsonify({"error": str(e)}), 500
+        return jsonify({"error": "AI took too long. Try a shorter prompt!"}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

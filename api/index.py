@@ -49,12 +49,17 @@ def ai_proxy():
     }
 
     try:
-        # 2. Now 'headers' exists so this won't crash!
         response = requests.post(OLLAMA_URL, headers=headers, json=payload, timeout=20)
+        
+        # If the API returns an error (like 401 or 404), this will catch it
+        if response.status_code != 200:
+            return jsonify({
+                "error": "API Provider Error",
+                "status_code": response.status_code,
+                "details": response.text  # This will tell us the EXACT reason
+            }), response.status_code
+            
         return jsonify(response.json())
-    except Exception as e:
-        print(f"Error: {e}") # This helps you see the error in your terminal
-        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

@@ -24,40 +24,59 @@ def home():
 
 @app.route('/api/ai', methods=['POST'])
 def ai_proxy():
-    if not OLLAMA_API_KEY:
-        return jsonify({"error": "API Key missing"}), 500
-
     data = request.json
     user_prompt = data.get("prompt", "")
-    system_content = data.get("system_instruction", CLASSIC_INSTRUCTION)
+    
+    # FORCE the model to behave by giving it a template in the prompt
+    rich_prompt = f"""
+    {user_prompt}
+    
+    IMPORTANT: You are a JSON-only assistant. 
+    Respond ONLY with a valid JSON object. No thinking, no markdown tags.
+    Format:
+    {{
+      "summary": "string",
+      "plotTwist": "string",
+      "vibeRating": "string",
+      "content": "string",
+      "choices": [ {{"text": "string", "impact": "string"}} ],
+      "isEnding": false
+    }}
+    """
 
     payload = {
         "model": "deepseek-r1:8b",
-        "messages": [
-            {"role": "system", "content": system_content + " Respond ONLY with a valid JSON object. Do not include any text outside the JSON."},
-            {"role": "user", "content": user_prompt}
-        ],
-        "temperature": 0.3, # Lower temperature is better for strict JSON
+        "messages": [{"role": "user", "content": rich_prompt}],
+        "temperature": 0.2, # Lower = more predictable JSON
         "stream": False
     }
 
     try:
-        response = requests.post(OLLAMA_URL, headers=headers, json=payload)
-        res_data = response.json()
+        response = requests.post(OLLAMA_URL, 
+                                 headers={"Authorization": f"Bearer {OLLAMA_API_KEY}"}, 
+                                 json=payload, 
+                                 timeout=30)
         
-        # 1. Get the raw text
-        raw_content = res_data['choices'][0]['message']['content']
+        full_res = response.json()
+        raw_content = full_res['choices'][0]['message']['content']
         
-        # 2. REMOVE THE THINKING TAGS (The Fix!)
-        # This regex deletes everything between <think> and </think>
+        # 1. Strip <think> tags
         clean_content = re.sub(r'<think>.*?</think>', '', raw_content, flags=re.DOTALL).strip()
         
-        # 3. Return the cleaned JSON text
-        # We replace the content with our cleaned version before sending to JS
-        res_data['choices'][0]['message']['content'] = clean_content
-        return jsonify(res_data)
+        # 2. Strip Markdown code blocks (```json ... ```) if the AI added them
+        clean_content = re.sub(r'```json|```', '', clean_content).strip()
+
+        # 3. Try to parse it to ensure it's valid JSON for the frontend
+        try:
+            parsed_json = json.loads(clean_content)
+            # Re-wrap in the format your app.js expects
+            return jsonify({"choices": [{"message": {"content": json.dumps(parsed_json)}}]})
+        except:
+            # Fallback if AI output is garbage
+            return jsonify({"choices": [{"message": {"content": '{"summary": "Error parsing AI response.", "vibeRating": "Vibe: Broken 💀"}'}}]})
 
     except Exception as e:
+        print(f"Backend Error: {e}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":

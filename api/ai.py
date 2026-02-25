@@ -6,14 +6,18 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-@app.route('/api/ai', methods=['POST'])
-def ai_handler():
-    # Use request.get_json() to handle the incoming data
+# We use '/' here because Vercel routes /api/ai directly to THIS file
+@app.route('/', defaults={'path': ''}, methods=['POST', 'OPTIONS'])
+@app.route('/<path:path>', methods=['POST', 'OPTIONS'])
+def catch_all(path):
+    # Handle CORS preflight
+    if request.method == 'OPTIONS':
+        return jsonify({"status": "ok"}), 200
+
     data = request.get_json(silent=True) or {}
-    user_prompt = data.get("prompt", "")
+    user_prompt = data.get("prompt", "Tell me a joke about books.")
     
     api_key = os.environ.get("OLLAMA_API_KEY")
-    # Using the standard OpenAI-compatible endpoint format
     url = "https://ollama.com/v1/chat/completions"
     
     headers = {
@@ -27,7 +31,7 @@ def ai_handler():
             {"role": "system", "content": "You are a JSON assistant. Respond ONLY in valid JSON."},
             {"role": "user", "content": user_prompt}
         ],
-        "stream": false
+        "stream": False # Python 'False' must be capitalized!
     }
 
     try:
@@ -35,7 +39,6 @@ def ai_handler():
         return jsonify(response.json())
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-
 
 
 """

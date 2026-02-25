@@ -22,8 +22,10 @@ STRICT FIDELITY FOR CLASSIC ABRIDGMENTS:
 def home():
     return render_template('index.html')
 
-@app.route('/api/ai', methods=['POST'])
+@app.route('/api/ai', methods=['GET', 'POST']) # Allow both just in case
 def ai_proxy():
+    if request.method == 'GET':
+        return jsonify({"status": "AI endpoint is live. Use POST to chat."})
     if not OLLAMA_API_KEY:
         return jsonify({"error": "API Key missing"}), 500
 

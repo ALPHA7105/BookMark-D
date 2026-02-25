@@ -5,37 +5,34 @@ async function callAI(prompt, systemInstruction = null) {
         body: JSON.stringify({ prompt, system_instruction: systemInstruction })
     });
 
-    const data = await response.json();
-    console.log("Full AI Response:", data); // This lets you see the error in the console
+    // 1. Check if the server returned a 2xx success code [MDN Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch)
+    if (!response.ok) {
+        const errorText = await response.text(); // Get raw text to see if it's an HTML error page
+        throw new Error(`HTTP ${response.status}: ${errorText}`);
+    }
 
-    // Handle the Ollama/OpenAI format: data.choices[0].message.content
-    if (data.choices && data.choices[0] && data.choices[0].message) {
+    // 2. Safely parse the JSON
+    let data;
+    try {
+        data = await response.json();
+    } catch (e) {
+        throw new Error("Server returned non-JSON content. Check the Network tab.");
+    }
+
+    console.log("Full AI Response:", data);
+
+    // 3. Handle OpenAI/Ollama nested format
+    const content = data.choices?.[0]?.message?.content;
+    if (content) {
+        if (typeof content === 'object') return content;
         try {
-            return JSON.parse(data.choices[0].message.content);
+            return JSON.parse(content);
         } catch (e) {
-            // If it's already a JSON object (not a string), return it directly
-            return typeof data.choices[0].message.content === 'object' 
-                ? data.choices[0].message.content 
-                : JSON.parse(data.choices[0].message.content);
+            console.warn("Content wasn't valid JSON string, returning as-is:", content);
+            return content;
         }
     }
     
-    // If the backend sent a direct error
-    if (data.error) {
-        throw new Error(data.error);
-    }
-
+    if (data.error) throw new Error(data.error);
     throw new Error("Unexpected response format from AI");
-}
-
-export async function generateStoryPreview(title, author, vibe) {
-    const prompt = `Generate an interactive preview for "${title}" by ${author}. Vibe: "${vibe}". Provide a snappy summary, a shocking potential plot twist, and a Gen-Z vibe rating.`;
-    return await callAI(prompt);
-}
-
-export async function generateInteractiveChapter(title, context, isLastChapter, readingLevel, choice) {
-    const prompt = isLastChapter 
-        ? `Conclude "${title}". Reader choice: "${choice}".`
-        : `Continue "${title}". Reader choice: "${choice}". Context: ${context.slice(-1000)}`;
-    return await callAI(prompt);
 }

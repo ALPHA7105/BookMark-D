@@ -1,17 +1,20 @@
 import os
 import requests
-import json
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-def handler(request):
-    # This is the Vercel-native way without needing Flask overhead
-    if request.method == 'OPTIONS': # Handle pre-flight for CORS
-        return '', 200, {'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'POST'}
+app = Flask(__name__)
+CORS(app)
 
-    if request.method != 'POST':
-        return 'Method Not Allowed', 405
-
-    data = request.get_json()
+@app.route('/api/ai', methods=['POST'])
+def ai_handler():
+    # Use request.get_json() to handle the incoming data
+    data = request.get_json(silent=True) or {}
+    user_prompt = data.get("prompt", "")
+    
     api_key = os.environ.get("OLLAMA_API_KEY")
+    # Using the standard OpenAI-compatible endpoint format
+    url = "https://ollama.com/v1/chat/completions"
     
     headers = {
         "Authorization": f"Bearer {api_key}",
@@ -21,17 +24,17 @@ def handler(request):
     payload = {
         "model": "llama3.2:1b",
         "messages": [
-            {"role": "system", "content": "You are a JSON assistant. Respond only in JSON."},
-            {"role": "user", "content": data.get("prompt", "")}
+            {"role": "system", "content": "You are a JSON assistant. Respond ONLY in valid JSON."},
+            {"role": "user", "content": user_prompt}
         ],
-        "stream": False
+        "stream": false
     }
 
     try:
-        response = requests.post("https://ollama.com/v1/chat/completions", headers=headers, json=payload)
-        return response.text, 200, {'Content-Type': 'application/json'}
+        response = requests.post(url, headers=headers, json=payload, timeout=20)
+        return jsonify(response.json())
     except Exception as e:
-        return json.dumps({"error": str(e)}), 500, {'Content-Type': 'application/json'}
+        return jsonify({"error": str(e)}), 500
 
 
 

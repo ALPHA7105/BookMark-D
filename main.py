@@ -29,12 +29,17 @@ def ai_proxy():
 
     data = request.json
     user_prompt = data.get("prompt", "")
-    system_content = data.get("system_instruction", CLASSIC_INSTRUCTION)
+    
+    # 1. Define the headers correctly
+    headers = {
+        "Authorization": f"Bearer {OLLAMA_API_KEY}",
+        "Content-Type": "application/json"
+    }
 
     payload = {
-        "model": "llama3.2:1b", # Switch to Llama 3 for 5x faster speed
+        "model": "llama3.2:1b", 
         "messages": [
-            {"role": "system", "content": "You are a JSON-only assistant for a book app. Respond ONLY with valid JSON."},
+            {"role": "system", "content": "You are a JSON-only assistant. Respond ONLY with valid JSON."},
             {"role": "user", "content": user_prompt}
         ],
         "temperature": 0.7,
@@ -42,13 +47,12 @@ def ai_proxy():
     }
 
     try:
+        # 2. Now 'headers' exists so this won't crash!
         response = requests.post(OLLAMA_URL, headers=headers, json=payload, timeout=20)
-        res_data = response.json()
-        
-        # Llama 3 won't have <think> tags, so we just send it straight
-        return jsonify(res_data)
+        return jsonify(response.json())
     except Exception as e:
-        return jsonify({"error": "AI took too long. Try a shorter prompt!"}), 500
+        print(f"Error: {e}") # This helps you see the error in your terminal
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     app.run(debug=True)

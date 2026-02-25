@@ -1,18 +1,12 @@
 import os
 import requests
+import json
 
 def handler(request):
-    if request.method == "GET":
-        return {
-            "statusCode": 200,
-            "body": '{"status":"AI endpoint is live. Use POST."}',
-            "headers": {"Content-Type": "application/json"}
-        }
-
     if request.method != "POST":
         return {
             "statusCode": 405,
-            "body": '{"error":"Method Not Allowed"}',
+            "body": json.dumps({"error": "Method Not Allowed"}),
             "headers": {"Content-Type": "application/json"}
         }
 
@@ -37,7 +31,7 @@ def handler(request):
             "temperature": 0.7
         }
 
-        response = requests.post(OLLAMA_URL, headers=headers, json=payload, timeout=20)
+        response = requests.post(OLLAMA_URL, headers=headers, json=payload)
 
         return {
             "statusCode": response.status_code,
@@ -48,6 +42,6 @@ def handler(request):
     except Exception as e:
         return {
             "statusCode": 500,
-            "body": f'{{"error":"Server exception","details":"{str(e)}"}}',
+            "body": json.dumps({"error": str(e)}),
             "headers": {"Content-Type": "application/json"}
         }

@@ -1,5 +1,46 @@
 import os
 import requests
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+
+app = Flask(__name__)
+CORS(app)
+
+OLLAMA_API_KEY = os.environ.get("OLLAMA_API_KEY")
+OLLAMA_URL = "https://ollama.com/v1/chat/completions"
+
+@app.route('/api/ai', methods=['POST'])
+def ai_proxy():
+    # Force JSON parsing
+    data = request.get_json(silent=True)
+    if not data:
+        return jsonify({"error": "No JSON payload received"}), 400
+
+    headers = {
+        "Authorization": f"Bearer {OLLAMA_API_KEY}",
+        "Content-Type": "application/json"
+    }
+
+    payload = {
+        "model": "llama3.2:1b",
+        "messages": [
+            {"role": "system", "content": "You are a JSON-only assistant."},
+            {"role": "user", "content": data.get("prompt", "")}
+        ],
+        "stream": False
+    }
+
+    try:
+        response = requests.post(OLLAMA_URL, headers=headers, json=payload, timeout=20)
+        return jsonify(response.json())
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+
+"""
+import os
+import requests
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS
 
@@ -10,13 +51,13 @@ CORS(app)
 OLLAMA_API_KEY = os.environ.get("OLLAMA_API_KEY")
 OLLAMA_URL = "https://ollama.com/v1/chat/completions"
 
-CLASSIC_INSTRUCTION = """
+CLASSIC_INSTRUCTION = ""
 STRICT FIDELITY FOR CLASSIC ABRIDGMENTS:
 - For books marked "Abridged" or under the "Inspired By Classics" theme:
 - ADHERE TO THE ORIGINAL PLOT OF THE SOURCE MATERIAL.
 - Use original character names and major plot beats from authors like Jane Austen or Arthur Conan Doyle.
 - Focus on maintaining the author's original voice while condensing for an interactive experience.
-"""
+""
 
 @app.route('/')
 def home():

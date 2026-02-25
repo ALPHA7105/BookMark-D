@@ -34,21 +34,29 @@ def ai_proxy():
     payload = {
         "model": "deepseek-r1:8b",
         "messages": [
-            {"role": "system", "content": system_content},
+            {"role": "system", "content": system_content + " Respond ONLY with a valid JSON object. Do not include any text outside the JSON."},
             {"role": "user", "content": user_prompt}
         ],
-        "temperature": 0.7,
-        "response_format": { "type": "json_object" }
-    }
-
-    headers = {
-        "Authorization": f"Bearer {OLLAMA_API_KEY}",
-        "Content-Type": "application/json"
+        "temperature": 0.3, # Lower temperature is better for strict JSON
+        "stream": False
     }
 
     try:
         response = requests.post(OLLAMA_URL, headers=headers, json=payload)
-        return jsonify(response.json())
+        res_data = response.json()
+        
+        # 1. Get the raw text
+        raw_content = res_data['choices'][0]['message']['content']
+        
+        # 2. REMOVE THE THINKING TAGS (The Fix!)
+        # This regex deletes everything between <think> and </think>
+        clean_content = re.sub(r'<think>.*?</think>', '', raw_content, flags=re.DOTALL).strip()
+        
+        # 3. Return the cleaned JSON text
+        # We replace the content with our cleaned version before sending to JS
+        res_data['choices'][0]['message']['content'] = clean_content
+        return jsonify(res_data)
+
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 

@@ -1,26 +1,22 @@
-import os
-import requests
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+import requests
+import os
 
 app = Flask(__name__)
-CORS(app)
-
-OLLAMA_API_KEY = os.environ.get("OLLAMA_API_KEY")
-OLLAMA_URL = "https://ollama.com/v1/chat/completions"
 
 @app.route('/api/ai', methods=['POST'])
-def ai_proxy():
-    # Force JSON parsing
-    data = request.get_json(silent=True)
-    if not data:
-        return jsonify({"error": "No JSON payload received"}), 400
-
+def handler():
+    # This is the direct entry point Vercel looks for
+    data = request.get_json()
+    
+    api_key = os.environ.get("OLLAMA_API_KEY")
+    url = "https://ollama.com/v1/chat/completions"
+    
     headers = {
-        "Authorization": f"Bearer {OLLAMA_API_KEY}",
+        "Authorization": f"Bearer {api_key}",
         "Content-Type": "application/json"
     }
-
+    
     payload = {
         "model": "llama3.2:1b",
         "messages": [
@@ -31,7 +27,7 @@ def ai_proxy():
     }
 
     try:
-        response = requests.post(OLLAMA_URL, headers=headers, json=payload, timeout=20)
+        response = requests.post(url, headers=headers, json=payload, timeout=20)
         return jsonify(response.json())
     except Exception as e:
         return jsonify({"error": str(e)}), 500

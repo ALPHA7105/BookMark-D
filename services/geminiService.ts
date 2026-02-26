@@ -139,7 +139,7 @@ export async function generateChapterAudio(text: string): Promise<string | undef
 export async function getWordDefinition(word: string, context: string, level: ReadingLevel): Promise<{ definition: string; example: string } | null> {
   try {
     const response = await ai.models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash-preview-tts',
       contents: `Provide a concise, teen-friendly definition for the word "${word}" as used in this context: "${context}". 
       Tailor the tone for a ${level} reading level. Keep it under 25 words.`,
       config: {

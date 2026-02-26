@@ -700,8 +700,8 @@ window.startReading = async (bookId) => {
   state.readingState.isLoading = false;
   
   // Try to get audio
-  const audio = await generateChapterAudio(chapter.content.slice(0, 1000));
-  state.readingState.audioUrl = audio;
+  // const audio = await generateChapterAudio(chapter.content.slice(0, 1000));
+  // state.readingState.audioUrl = audio;
   
   renderApp();
 };

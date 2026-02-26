@@ -1,5 +1,5 @@
 // geminiService.js
-
+const fetch = require('node-fetch');
 async function callAI(prompt) {
   try {
     const response = await fetch("/api/ai", {

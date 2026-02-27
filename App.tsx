@@ -244,14 +244,11 @@ const App: React.FC = () => {
                   <h2 className="text-3xl font-black tracking-tighter">Handcrafted Mood Matches</h2>
                   <Badge label="New Interactive Starts" icon="💎" />
                 </div>
-                <div className="flex gap-8 overflow-x-auto pb-8 no-scrollbar">
-                  {(activeMood === 'all' ? MOOD_STORIES : activeMoodStories).map(story => (
-                    <MoodStoryCard 
-                      key={story.id} 
-                      story={story} 
-                      onSelect={handleMoodStorySelect} 
-                    />
-                  ))}
+                <MoodStoryShelf 
+                  stories={activeMood === 'all' ? MOOD_STORIES : activeMoodStories} 
+                  onStorySelect={handleMoodStorySelect} 
+                  theme="fantasy" // or derive from mood if you want different colors
+                />
                 </div>
               </section>
             )}

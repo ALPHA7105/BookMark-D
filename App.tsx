@@ -235,7 +235,7 @@ const App: React.FC = () => {
                 </div>
               </div>
             </section>
-
+/*
             <MoodSelector activeMood={activeMood} onMoodChange={setActiveMood} />
 
             {MOOD_STORIES.length > 0 && (
@@ -255,11 +255,26 @@ const App: React.FC = () => {
                 </div>
               </section>
             )}
+*/
+            <section className="animate-[fade-in-up_0.6s_ease-out]">
+              <div className="flex items-center justify-between mb-8">
+                <h2 className="text-3xl font-black">
+                  {activeMood === 'all' ? 'Short Stories For Your Mood' : 'Archive Matches'}
+                </h2>
+                {activeMood !== 'all' && (
+                  <button 
+                    onClick={() => setActiveMood('all')} 
+                    className="text-xs font-black uppercase text-pink-500 hover:text-pink-400 transition-colors"
+                  >
+                    View All
+                  </button>
+                )}
+              </div>
 
             <section className="animate-[fade-in-up_0.6s_ease-out]">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-black">
-                  {activeMood === 'all' ? 'Your Curated Shelves' : 'Archive Matches'}
+                  {activeMood === 'all' ? 'Your Curated Bookshelves' : 'Archive Matches'}
                 </h2>
                 {activeMood !== 'all' && (
                   <button 

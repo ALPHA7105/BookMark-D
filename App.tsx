@@ -1,4 +1,3 @@
-
 import React, { useState, useMemo, useEffect } from 'react';
 import { INITIAL_BOOKS, MOOD_STORIES, MOCK_USER } from './constants';
 import { Book, ShelfTheme, ReadingLevel, UserProfile, MoodStory, MoodType, UserBadge } from './types';
@@ -235,27 +234,7 @@ const App: React.FC = () => {
                 </div>
               </div>
             </section>
-/*
-            <MoodSelector activeMood={activeMood} onMoodChange={setActiveMood} />
 
-            {MOOD_STORIES.length > 0 && (
-              <section className="mb-16 animate-[fade-in-up_0.6s_ease-out]">
-                <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-3xl font-black tracking-tighter">Handcrafted Mood Matches</h2>
-                  <Badge label="New Interactive Starts" icon="💎" />
-                </div>
-                <div className="flex gap-8 overflow-x-auto pb-8 no-scrollbar">
-                  {(activeMood === 'all' ? MOOD_STORIES : activeMoodStories).map(story => (
-                    <MoodStoryCard 
-                      key={story.id} 
-                      story={story} 
-                      onSelect={handleMoodStorySelect} 
-                    />
-                  ))}
-                </div>
-              </section>
-            )}
-*/
             <section className="animate-[fade-in-up_0.6s_ease-out]">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-black">
@@ -270,8 +249,6 @@ const App: React.FC = () => {
                   </button>
                 )}
               </div>
-
-            <section className="animate-[fade-in-up_0.6s_ease-out]">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-black">
                   {activeMood === 'all' ? 'Your Curated Bookshelves' : 'Archive Matches'}

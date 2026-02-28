@@ -264,7 +264,7 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                activeMoodStories.length > 0 && (
+                {activeMoodStories.length > 0 && (
                   <div className="mb-16">
                     <div className="flex items-center justify-between mb-6">
                       <h3 className="text-xl font-black text-white/80 uppercase tracking-wider">

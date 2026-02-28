@@ -249,6 +249,19 @@ const App: React.FC = () => {
                   </button>
                 )}
               </div>
+
+              {activeMoodStories.length > 0 && (
+                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                  {activeMoodStories.map(story => (
+                    <MoodStoryCard
+                      key={story.id}
+                      story={story}
+                      onClick={() => handleMoodStorySelect(story)}
+                    />
+                  ))}
+                </div>
+              )}
+              
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-black">
                   {activeMood === 'all' ? 'Your Curated Bookshelves' : 'Archive Matches'}

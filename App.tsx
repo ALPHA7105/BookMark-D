@@ -117,24 +117,7 @@ const App: React.FC = () => {
       }
     });
   }, [allBooks, activeMood]);
-
-  const moodStoriesAsBooks: Book[] = useMemo(() => {
-    return activeMoodStories.map(story => ({
-      id: story.id,
-      title: story.title,
-      author: story.origin,
-      description: story.hook,
-      theme: 'fantasy', // visual grouping — doesn't matter much
-      coverImage: story.coverImage,
-      tags: [story.genre, story.tone],
-      vibe: story.tone,
-      readCount: "NEW",
-      totalChapters: story.length === 'Short' ? 8 : 15,
-      readingLevel: 'Standard'
-    }));
-  }, [activeMoodStories]);
   
-/*
   const activeMoodStories = useMemo(() => {
     if (activeMood === 'all') return MOOD_STORIES;
     return MOOD_STORIES.filter(s => s.moodId === activeMood);
@@ -156,7 +139,23 @@ const App: React.FC = () => {
     };
     setReadingState({ book: mappedBook, level: 'Standard' });
   };
-*/
+
+  const moodStoriesAsBooks: Book[] = useMemo(() => {
+    return activeMoodStories.map(story => ({
+      id: story.id,
+      title: story.title,
+      author: story.origin,
+      description: story.hook,
+      theme: 'fantasy', // visual grouping — doesn't matter much
+      coverImage: story.coverImage,
+      tags: [story.genre, story.tone],
+      vibe: story.tone,
+      readCount: "NEW",
+      totalChapters: story.length === 'Short' ? 8 : 15,
+      readingLevel: 'Standard'
+    }));
+  }, [activeMoodStories]);
+  
   const getBooksByTheme = (theme: ShelfTheme) => {
     return filteredBooks.filter(b => b.theme === theme);
   };

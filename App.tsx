@@ -119,7 +119,7 @@ const App: React.FC = () => {
   }, [allBooks, activeMood]);
 
   const activeMoodStories = useMemo(() => {
-    if (activeMood === 'all') return [];
+    if (activeMood === 'all') return MOOD_STORIES;
     return MOOD_STORIES.filter(s => s.moodId === activeMood);
   }, [activeMood]);
 
@@ -264,11 +264,11 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                {activeMood !== 'all' && activeMoodStories.length > 0 && (
+                activeMoodStories.length > 0 && (
                   <div className="mb-16">
                     <div className="flex items-center justify-between mb-6">
                       <h3 className="text-xl font-black text-white/80 uppercase tracking-wider">
-                        Mood Stories
+                        Short Stories
                       </h3>
                     </div>
 

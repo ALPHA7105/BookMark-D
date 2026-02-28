@@ -146,7 +146,7 @@ const App: React.FC = () => {
       title: story.title,
       author: story.origin,
       description: story.hook,
-      theme: 'fantasy', // visual grouping — doesn't matter much
+      theme: 'shorts',
       coverImage: story.coverImage,
       tags: [story.genre, story.tone],
       vibe: story.tone,

@@ -118,11 +118,28 @@ const App: React.FC = () => {
     });
   }, [allBooks, activeMood]);
 
+  const moodStoriesAsBooks: Book[] = useMemo(() => {
+    return activeMoodStories.map(story => ({
+      id: story.id,
+      title: story.title,
+      author: story.origin,
+      description: story.hook,
+      theme: 'fantasy', // visual grouping — doesn't matter much
+      coverImage: story.coverImage,
+      tags: [story.genre, story.tone],
+      vibe: story.tone,
+      readCount: "NEW",
+      totalChapters: story.length === 'Short' ? 8 : 15,
+      readingLevel: 'Standard'
+    }));
+  }, [activeMoodStories]);
+  
+/*
   const activeMoodStories = useMemo(() => {
     if (activeMood === 'all') return MOOD_STORIES;
     return MOOD_STORIES.filter(s => s.moodId === activeMood);
   }, [activeMood]);
-
+  
   const handleMoodStorySelect = (story: MoodStory) => {
     const mappedBook: Book = {
       id: story.id,
@@ -139,7 +156,7 @@ const App: React.FC = () => {
     };
     setReadingState({ book: mappedBook, level: 'Standard' });
   };
-
+*/
   const getBooksByTheme = (theme: ShelfTheme) => {
     return filteredBooks.filter(b => b.theme === theme);
   };
@@ -250,16 +267,15 @@ const App: React.FC = () => {
                 )}
               </div>
 
-              {activeMoodStories.length > 0 && (
-                <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                  {activeMoodStories.map(story => (
-                    <MoodStoryCard
-                      key={story.id}
-                      story={story}
-                      onClick={() => handleMoodStorySelect(story)}
-                    />
-                  ))}
-                </div>
+              {moodStoriesAsBooks.length > 0 && (
+                <Shelf
+                  theme={'fantasy'} 
+                  books={moodStoriesAsBooks}
+                  onBookClick={(book) => {
+                    const story = activeMoodStories.find(s => s.id === book.id);
+                    if (story) handleMoodStorySelect(story);
+                  }}
+                />
               )}
               
               <div className="flex items-center justify-between mb-8">
@@ -277,25 +293,6 @@ const App: React.FC = () => {
               </div>
 
               <div>
-                {activeMoodStories.length > 0 && (
-                  <div className="mb-16">
-                    <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-xl font-black text-white/80 uppercase tracking-wider">
-                        Short Stories
-                      </h3>
-                    </div>
-
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                      {activeMoodStories.map(story => (
-                        <MoodStoryCard
-                          key={story.id}
-                          story={story}
-                          onClick={() => handleMoodStorySelect(story)}
-                        />
-                      ))}
-                    </div>
-                  </div>
-                )}
                 {activeMood !== 'all' && filteredBooks.length === 0 && activeMoodStories.length === 0 ? (
                   <div className="py-20 text-center bg-white/5 rounded-[3rem] border border-dashed border-white/10">
                     <span className="text-4xl mb-4 block">🔍</span>

@@ -264,6 +264,25 @@ const App: React.FC = () => {
               </div>
 
               <div>
+                {activeMood !== 'all' && activeMoodStories.length > 0 && (
+                  <div className="mb-16">
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-xl font-black text-white/80 uppercase tracking-wider">
+                        Mood Stories
+                      </h3>
+                    </div>
+
+                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                      {activeMoodStories.map(story => (
+                        <MoodStoryCard
+                          key={story.id}
+                          story={story}
+                          onClick={() => handleMoodStorySelect(story)}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
                 {activeMood !== 'all' && filteredBooks.length === 0 && activeMoodStories.length === 0 ? (
                   <div className="py-20 text-center bg-white/5 rounded-[3rem] border border-dashed border-white/10">
                     <span className="text-4xl mb-4 block">🔍</span>

@@ -2,6 +2,12 @@
 import { Book, ShelfTheme, MoodStory, UserProfile } from './types';
 
 export const THEME_CONFIG: Record<ShelfTheme, { color: string; bg: string; border: string; label: string }> = {
+  'shorts': {
+    color: 'text-amber-400',
+    bg: 'bg-stone-900/40',
+    border: 'border-amber-900/50',
+    label: '⚡ Shorts / Quick Reads'
+  },
   'classics': {
     color: 'text-amber-400',
     bg: 'bg-stone-900/40',

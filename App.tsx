@@ -10,6 +10,7 @@ import Badge from './components/Badge';
 import MoodSelector from './components/MoodSelector';
 import AuthView from './components/AuthView';
 import MoodStoryCard from './components/MoodStoryCard';
+import Logo from './assets/bookmark-d.png';
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
@@ -188,8 +189,8 @@ const App: React.FC = () => {
             setActiveMood('all');
           }}
         >
-          <div className="w-10 h-10 bg-gradient-to-br from-pink-500 to-purple-600 rounded-xl flex items-center justify-center text-xl font-black shadow-lg shadow-pink-500/20 group-hover:scale-110 transition-transform">
-            B
+          <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-lg shadow-pink-500/20 group-hover:scale-110 transition-transform">
+            <img src={Logo} alt="Logo" className="w-full h-full object-cover" />
           </div>
           <h1 className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
             BookMark’D

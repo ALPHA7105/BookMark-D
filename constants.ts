@@ -686,3 +686,33 @@ export const MOCK_USER: UserProfile = {
   ],
   completedBookIds: {}
 };
+
+export const SOCIAL_PROFILES = [
+  {
+    id: "user_01",
+    name: "Aanya",
+    mood: "Dreamy",
+    badge: "Sci-Fi Soul",
+    currentlyReading: "Neon Gods",
+    avatar: "🌙",
+    compatibility: 82
+  },
+  {
+    id: "user_02",
+    name: "Rehan",
+    mood: "Dark Academia",
+    badge: "Philosophy Core",
+    currentlyReading: "The Silent Mind",
+    avatar: "🕯️",
+    compatibility: 74
+  },
+  {
+    id: "user_03",
+    name: "Maya",
+    mood: "Cyberpunk",
+    badge: "Future Seeker",
+    currentlyReading: "Synthetic Dreams",
+    avatar: "⚡",
+    compatibility: 91
+  }
+]

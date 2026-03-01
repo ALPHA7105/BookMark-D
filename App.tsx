@@ -294,7 +294,7 @@ const App: React.FC = () => {
             <section className="animate-[fade-in-up_0.6s_ease-out]">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-black">
-                  {activeMood === 'all' ? 'Short Stories For Your Mood' : 'Archive Matches'}
+                  {activeMood === 'all' ? 'Your Handcrafted Tales' : 'Archive Matches'}
                 </h2>
                 {activeMood !== 'all' && (
                   <button 

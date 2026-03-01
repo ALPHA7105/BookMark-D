@@ -11,6 +11,7 @@ import MoodSelector from './components/MoodSelector';
 import AuthView from './components/AuthView';
 import MoodStoryCard from './components/MoodStoryCard';
 import Logo from './assets/bookmark-d.png';
+import SocialView from "./components/SocialView";
 
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
@@ -362,7 +363,9 @@ const App: React.FC = () => {
         {activeTab === 'profile' && currentUser && (
           <ProfileView user={currentUser} onUpdate={handleUpdateProfile} />
         )}
-        
+
+        {activeTab === 'social' && <SocialView />}
+        {/*
         {activeTab === 'social' && (
           <div className="flex flex-col items-center justify-center py-24 text-center">
             <div className="text-6xl mb-6">🤝</div>
@@ -370,6 +373,7 @@ const App: React.FC = () => {
             <p className="text-white/40 max-w-md">Connect with friends, swap reading badges, and discover what your squad is reading. Coming soon!</p>
           </div>
         )}
+        */}
 
         <footer className="mt-20 py-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8 opacity-50">
           <p className="font-bold">&copy; 2026 BookMark’D Inc. Keep reading.</p>

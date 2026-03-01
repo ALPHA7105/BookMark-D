@@ -326,7 +326,7 @@ const App: React.FC = () => {
                     onClick={() => setActiveMood('all')} 
                     className="text-xs font-black uppercase text-pink-500 hover:text-pink-400 transition-colors"
                   >
-                    View All
+                    Scroll for more
                   </button>
                 )}
               </div>

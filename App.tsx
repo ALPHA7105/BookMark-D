@@ -283,6 +283,13 @@ const App: React.FC = () => {
               </div>
             </section>
 
+            <div className="mb-14 flex justify-center">
+              <MoodSelector 
+                activeMood={activeMood}
+                onMoodChange={setActiveMood}
+              />
+            </div>
+
             <section className="animate-[fade-in-up_0.6s_ease-out]">
               <div className="flex items-center justify-between mb-8">
                 <h2 className="text-3xl font-black">

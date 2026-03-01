@@ -196,7 +196,7 @@ const App: React.FC = () => {
             BookMark’D
           </h1>
         </div>
-        */}
+        
         <div className="hidden md:flex gap-10 items-center text-xs font-black uppercase tracking-[0.2em]">
           {['discover', 'create', 'profile', 'social'].map(tab => (
             <button 

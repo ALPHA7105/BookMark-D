@@ -308,7 +308,7 @@ const App: React.FC = () => {
 
               {moodStoriesAsBooks.length > 0 && (
                 <Shelf
-                  theme={'fantasy'} 
+                  theme={'shorts'} 
                   books={moodStoriesAsBooks}
                   onBookClick={(book) => {
                     const story = activeMoodStories.find(s => s.id === book.id);

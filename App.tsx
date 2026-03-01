@@ -190,7 +190,7 @@ const App: React.FC = () => {
           }}
         >
           <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-lg shadow-pink-500/20 group-hover:scale-110 transition-transform">
-            <img src={Logo} alt="Logo" className="w-full h-full object-cover" />
+            <img src={Logo} alt="Logo" className="h-12 w-auto object-contain group-hover:scale-105 transition-transform" />
           </div>
           <h1 className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
             BookMark’D

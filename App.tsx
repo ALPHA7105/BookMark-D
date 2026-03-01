@@ -12,6 +12,8 @@ import AuthView from './components/AuthView';
 import MoodStoryCard from './components/MoodStoryCard';
 import Logo from './assets/bookmark-d.png';
 
+const [isLoaded, setIsLoaded] = useState(false);
+
 const App: React.FC = () => {
   const [currentUser, setCurrentUser] = useState<UserProfile | null>(null);
   const [userBooks, setUserBooks] = useState<Book[]>([]);
@@ -24,9 +26,11 @@ const App: React.FC = () => {
   useEffect(() => {
     const savedUser = localStorage.getItem('bookmarkd_user');
     const savedBooks = localStorage.getItem('bookmarkd_user_books');
-    
+
     if (savedUser) setCurrentUser(JSON.parse(savedUser));
     if (savedBooks) setUserBooks(JSON.parse(savedBooks));
+
+    setIsLoaded(true);
   }, []);
 
   const handleAuthComplete = (profile: UserProfile) => {
@@ -174,6 +178,8 @@ const App: React.FC = () => {
     setReadingState({ book: newBook, level: newBook.readingLevel || 'Standard' });
     setActiveTab('discover');
   };
+
+  if (!isLoaded) return null;
 
   if (!currentUser) {
     return <AuthView onComplete={handleAuthComplete} />;

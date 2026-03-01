@@ -372,7 +372,7 @@ const App: React.FC = () => {
         )}
 
         <footer className="mt-20 py-12 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-8 opacity-50">
-          <p className="font-bold">&copy; 2024 BookMark’D Inc. Keep reading.</p>
+          <p className="font-bold">&copy; 2026 BookMark’D Inc. Keep reading.</p>
           <div className="flex gap-6 text-xs font-black uppercase tracking-widest">
             <a href="#" className="hover:text-pink-500">Privacy</a>
             <a href="#" className="hover:text-pink-500">Terms</a>

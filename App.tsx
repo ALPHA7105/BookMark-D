@@ -227,12 +227,12 @@ const App: React.FC = () => {
             <section className="relative h-[520px] flex items-center justify-center overflow-hidden rounded-[3rem] border border-white/10 shadow-2xl mb-16">
 
               {/* Background */}
-              <div className="absolute inset-0 z-0">
+              <div className="absolute inset-0 z-0 overflow-hidden">
                 <img 
                   src="https://picsum.photos/seed/bookshelf/1920/1080?blur=5"
-                  className="w-full h-full object-cover opacity-20"
+                  className="w-full h-full object-cover opacity-60 scale-105"
                 />
-                <div className="absolute inset-0 bg-gradient-to-b from-[#0f172a] via-[#0f172a]/80 to-[#0f172a]" />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#0f172a]/60 via-[#0f172a]/50 to-[#0f172a]" />
               </div>
 
               {/* Ambient glow */}
@@ -249,17 +249,16 @@ const App: React.FC = () => {
 
                 {/* Headline */}
                 <h2 className="text-6xl md:text-7xl font-black tracking-tighter leading-none">
-                  Find your next
+                  Your stories,
                   <br/>
                   <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600">
-                    story obsession.
+                    REIMAGINED
                   </span>
                 </h2>
 
                 {/* Description */}
                 <p className="text-lg text-slate-400 font-medium leading-relaxed max-w-xl mx-auto">
-                  Shape the stories you read, earn living badges, and explore immersive narratives
-                  crafted for your vibe.
+                  Find your next obsession. Shape the stories you read, earn living badges, and explore immersive narratives crafted for your vibe.
                 </p>
 
                 {/* CTA */}

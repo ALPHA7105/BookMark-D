@@ -189,7 +189,7 @@ const App: React.FC = () => {
             setActiveMood('all');
           }}
         >
-          <img src={Logo} alt="Logo" className="w-auto object-contain" />
+          <img src={Logo} alt="Logo" className="h-10 w-auto object-contain" />
           <h1 className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
             BookMark’D
           </h1>

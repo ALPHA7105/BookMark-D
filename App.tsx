@@ -183,7 +183,7 @@ const App: React.FC = () => {
     <div className="min-h-screen pb-24 md:pb-0 md:pt-20">
       <header className="fixed top-0 left-0 right-0 z-40 bg-[#0f172a]/80 backdrop-blur-md border-b border-white/5 px-6 py-4 flex items-center justify-between">
         <div 
-          className="flex items-center gap-3 cursor-pointer group transition-transform transform hover:scale-110"
+          className="flex items-center gap-3 cursor-pointer group transition-transform transform hover:scale-105"
           onClick={() => {
             setActiveTab('discover');
             setActiveMood('all');

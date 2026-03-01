@@ -192,7 +192,7 @@ const App: React.FC = () => {
           <div className="flex items-center justify-center group-hover:scale-110 transition-transform">
             <img src={Logo} alt="Logo" className="h-16 w-auto object-contain transition-transform" />
           </div>
-          <h1 className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
+          <h1 className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60 group-hover:scale-110">
             BookMark’D
           </h1>
         </div>

@@ -224,30 +224,63 @@ const App: React.FC = () => {
       <main className="max-w-7xl mx-auto px-6 py-10 md:py-12">
         {activeTab === 'discover' && (
           <>
-            <section className="mb-16 relative overflow-hidden rounded-[3rem] bg-gradient-to-br from-[#1e1b4b] via-[#312e81] to-[#4c1d95] p-8 md:p-16 border border-white/10 shadow-2xl">
-              <div className="absolute top-0 right-0 w-full h-full opacity-30 mix-blend-overlay pointer-events-none">
-                <img src="https://images.unsplash.com/photo-1550100136-e092101726f4?q=80&w=1600&auto=format&fit=crop" alt="Abstract library" className="w-full h-full object-cover" />
+            <section className="relative h-[520px] flex items-center justify-center overflow-hidden rounded-[3rem] border border-white/10 shadow-2xl mb-16">
+
+              {/* Background */}
+              <div className="absolute inset-0 z-0">
+                <img 
+                  src="https://picsum.photos/seed/bookshelf/1920/1080?blur=5"
+                  className="w-full h-full object-cover opacity-20"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-[#0f172a] via-[#0f172a]/80 to-[#0f172a]" />
               </div>
-              
-              <div className="relative z-10 max-w-2xl">
-                <Badge label={`Picked for ${currentUser.displayName}`} icon="🔮" colorClass="bg-white/10 text-white border-white/20 mb-4" />
-                <h2 className="text-5xl md:text-7xl font-black tracking-tight leading-none mb-6 font-serif italic text-white">
-                  Find your next <span className="text-pink-400">obsession.</span>
+
+              {/* Ambient glow */}
+              <div className="absolute -top-40 right-[-10%] w-[600px] h-[600px] bg-pink-500/20 blur-[140px] rounded-full pointer-events-none" />
+              <div className="absolute -bottom-40 left-[-10%] w-[600px] h-[600px] bg-purple-600/20 blur-[140px] rounded-full pointer-events-none" />
+
+              {/* Content */}
+              <div className="relative z-10 text-center space-y-8 px-6 max-w-3xl">
+
+                {/* Personalized badge */}
+                <div className="inline-flex items-center gap-2 px-5 py-2 bg-white/5 border border-white/10 rounded-full text-white/70 text-[10px] font-black uppercase tracking-[0.2em] backdrop-blur-md">
+                  🔮 Picked for {currentUser.displayName}
+                </div>
+
+                {/* Headline */}
+                <h2 className="text-6xl md:text-7xl font-black tracking-tighter leading-none">
+                  Find your next
+                  <br/>
+                  <span className="bg-clip-text text-transparent bg-gradient-to-r from-pink-500 to-purple-600">
+                    story obsession.
+                  </span>
                 </h2>
-                <p className="text-xl text-white/80 font-light mb-8 max-w-lg">
-                  Personalize your shelf, earn unique abridgment badges, and shape the stories you read.
+
+                {/* Description */}
+                <p className="text-lg text-slate-400 font-medium leading-relaxed max-w-xl mx-auto">
+                  Shape the stories you read, earn living badges, and explore immersive narratives
+                  crafted for your vibe.
                 </p>
-                <div className="flex flex-col sm:flex-row gap-4">
+
+                {/* CTA */}
+                <div className="flex flex-wrap justify-center gap-4 pt-2">
+
                   <button 
                     onClick={() => setActiveTab('create')}
-                    className="bg-white text-black px-10 py-4 rounded-2xl font-black text-lg hover:scale-105 transition-transform active:scale-95"
+                    className="px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white font-black rounded-2xl shadow-xl shadow-pink-500/20 hover:scale-105 transition-transform"
                   >
                     Forge a Story
                   </button>
-                  <button className="bg-white/10 backdrop-blur-md border border-white/20 px-10 py-4 rounded-2xl font-black text-lg hover:bg-white/20 transition-colors">
-                    Explore Trends
+
+                  <button 
+                    onClick={() => setActiveTab('social')}
+                    className="px-8 py-4 bg-slate-800 text-white font-black rounded-2xl border border-white/5 hover:bg-slate-700 transition-colors"
+                  >
+                    Explore Social
                   </button>
+
                 </div>
+
               </div>
             </section>
 

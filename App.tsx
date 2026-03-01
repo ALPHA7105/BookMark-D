@@ -182,21 +182,6 @@ const App: React.FC = () => {
   return (
     <div className="min-h-screen pb-24 md:pb-0 md:pt-20">
       <header className="fixed top-0 left-0 right-0 z-40 bg-[#0f172a]/80 backdrop-blur-md border-b border-white/5 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <img 
-            src={Logo} 
-            alt="Logo" 
-            className="h-16 w-auto object-contain cursor-pointer group-hover:scale-105 transition-transform" 
-            onClick={() => {
-              setActiveTab('discover');
-              setActiveMood('all');
-            }}
-          />
-          <h1 className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
-            BookMark’D
-          </h1>
-        </div>
-        {/*
         <div 
           className="flex items-center gap-3 cursor-pointer group" 
           onClick={() => {
@@ -204,8 +189,8 @@ const App: React.FC = () => {
             setActiveMood('all');
           }}
         >
-          <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center shadow-lg shadow-pink-500/20 group-hover:scale-110 transition-transform">
-            <img src={Logo} alt="Logo" className="h-12 w-auto object-contain group-hover:scale-105 transition-transform" />
+          <div className="flex items-center justify-center group-hover:scale-110 transition-transform">
+            <img src={Logo} alt="Logo" className="h-16 w-auto object-contain transition-transform" />
           </div>
           <h1 className="text-2xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-white to-white/60">
             BookMark’D

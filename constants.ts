@@ -73,7 +73,7 @@ export const MOOD_STORIES: MoodStory[] = [
     origin: 'Inspired by Classics',
     keyChoice: 'Leak the secret coordinates to meet in person, or keep the connection digital and safe?',
     moodId: 'romantic',
-    coverImage: '/assets/m-3.jpeg',
+    coverImage: 'https://i.pinimg.com/736x/60/db/b3/60dbb30820b1c9f6f30cec8da042ff0d.jpg',
     vibeColor: 'from-pink-500 to-rose-400',
     theme: 'shorts',
   },

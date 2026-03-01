@@ -3,10 +3,10 @@ import { Book, ShelfTheme, MoodStory, UserProfile } from './types';
 
 export const THEME_CONFIG: Record<ShelfTheme, { color: string; bg: string; border: string; label: string }> = {
   'shorts': {
-    color: 'text-amber-400',
+    color: 'text-lime-400',        // changed from amber to lime
     bg: 'bg-stone-900/40',
-    border: 'border-amber-900/50',
-    label: '⚡ Shorts / Quick Reads'
+    border: 'border-lime-600/50',  // adjusted border to match new color
+    label: '⚡ Quick Reads'
   },
   'classics': {
     color: 'text-amber-400',

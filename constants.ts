@@ -46,7 +46,8 @@ export const MOOD_STORIES: MoodStory[] = [
     keyChoice: 'Drink the "Forgotten Earl Grey" to remember a lost friend, or "Tomorrow Matcha" for a glimpse of your future?',
     moodId: 'cozy',
     coverImage: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?q=80&w=800&auto=format&fit=crop',
-    vibeColor: 'from-orange-400 to-amber-600'
+    vibeColor: 'from-orange-400 to-amber-600',
+    theme: 'shorts',
   },
   {
     id: 'm-2',
@@ -59,7 +60,8 @@ export const MOOD_STORIES: MoodStory[] = [
     keyChoice: 'Initiate a blind landing towards the music, or orbit and scan for hostile digital signatures?',
     moodId: 'adventure',
     coverImage: 'https://images.unsplash.com/photo-1614728263952-84ea206f25ab?q=80&w=800&auto=format&fit=crop',
-    vibeColor: 'from-cyan-400 to-blue-600'
+    vibeColor: 'from-cyan-400 to-blue-600',
+    theme: 'shorts',
   },
   {
     id: 'm-3',
@@ -72,7 +74,8 @@ export const MOOD_STORIES: MoodStory[] = [
     keyChoice: 'Leak the secret coordinates to meet in person, or keep the connection digital and safe?',
     moodId: 'romantic',
     coverImage: 'https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=800&auto=format&fit=crop',
-    vibeColor: 'from-pink-500 to-rose-400'
+    vibeColor: 'from-pink-500 to-rose-400',
+    theme: 'shorts',
   },
   {
     id: 'm-4',
@@ -85,7 +88,8 @@ export const MOOD_STORIES: MoodStory[] = [
     keyChoice: 'Seize the throne while the King sleeps, or flee the castle before the prophecy takes hold?',
     moodId: 'dark',
     coverImage: 'https://images.unsplash.com/photo-1518709268805-4e9042af9f23?q=80&w=800&auto=format&fit=crop',
-    vibeColor: 'from-slate-800 to-red-950'
+    vibeColor: 'from-slate-800 to-red-950',
+    theme: 'shorts',
   },
   {
     id: 'm-5',
@@ -98,7 +102,8 @@ export const MOOD_STORIES: MoodStory[] = [
     keyChoice: 'Photograph the code and call the authorities, or step inside and solve the first line yourself?',
     moodId: 'mysterious',
     coverImage: 'https://images.unsplash.com/photo-1478720568477-152d9b164e26?q=80&w=800&auto=format&fit=crop',
-    vibeColor: 'from-amber-600 to-stone-900'
+    vibeColor: 'from-amber-600 to-stone-900',
+    theme: 'shorts',
   },
   {
     id: 'm-6',
@@ -111,7 +116,8 @@ export const MOOD_STORIES: MoodStory[] = [
     keyChoice: 'Paint a massive mural on the government plaza, or share the paint secretly with the underground?',
     moodId: 'uplifting',
     coverImage: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop',
-    vibeColor: 'from-yellow-400 to-green-500'
+    vibeColor: 'from-yellow-400 to-green-500',
+    theme: 'shorts',
   },
   {
     id: 'm-7',
@@ -124,7 +130,8 @@ export const MOOD_STORIES: MoodStory[] = [
     keyChoice: 'Transmit the poetry into the void one last time, or delete the logs to finally rest in silence?',
     moodId: 'melancholic',
     coverImage: 'https://images.unsplash.com/photo-1512820790803-83ca734da794?q=80&w=800&auto=format&fit=crop',
-    vibeColor: 'from-indigo-800 to-purple-950'
+    vibeColor: 'from-indigo-800 to-purple-950',
+    theme: 'shorts',
   },
   {
     id: 'm-8',
@@ -137,7 +144,8 @@ export const MOOD_STORIES: MoodStory[] = [
     keyChoice: 'Take the dangerous shortcut across the gravity-rails, or risk the slower, crowded lower streets?',
     moodId: 'fast-paced',
     coverImage: 'https://images.unsplash.com/photo-1550100136-e092101726f4?q=80&w=800&auto=format&fit=crop',
-    vibeColor: 'from-red-500 to-purple-600'
+    vibeColor: 'from-red-500 to-purple-600',
+    theme: 'shorts',
   }
 ];
 

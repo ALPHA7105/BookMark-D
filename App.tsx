@@ -85,7 +85,7 @@ const App: React.FC = () => {
     });
   }, [userBooks, currentUser]);
 
-  const shelves: ShelfTheme[] = ['classics', 'sci-fi', 'fantasy', 'crime'];
+  const shelves: ShelfTheme[] = ['classics', 'sci-fi', 'fantasy', 'crime', 'shorts'];
 
   const filteredBooks = useMemo(() => {
     if (activeMood === 'all') return allBooks;
@@ -119,8 +119,9 @@ const App: React.FC = () => {
   }, [allBooks, activeMood]);
   
   const activeMoodStories = useMemo(() => {
-    if (activeMood === 'all') return MOOD_STORIES;
-    return MOOD_STORIES.filter(s => s.moodId === activeMood);
+    return activeMood === 'all'
+      ? MOOD_STORIES
+      : MOOD_STORIES.filter(s => s.moodId === activeMood);
   }, [activeMood]);
   
   const handleMoodStorySelect = (story: MoodStory) => {
@@ -283,7 +284,7 @@ const App: React.FC = () => {
               </div>
             </section>
 
-            <div className="mb-14 flex justify-center">
+            <div className="max-w-6xl mx-auto px-6">
               <MoodSelector 
                 activeMood={activeMood}
                 onMoodChange={setActiveMood}
@@ -339,7 +340,7 @@ const App: React.FC = () => {
                 ) : (
                   shelves.map(theme => {
                   const themeBooks = getBooksByTheme(theme);
-                    if (activeMood !== 'all' && themeBooks.length === 0) return null;
+                    if (themeBooks.length === 0) return null;
                     return (
                       <Shelf 
                         key={theme} 

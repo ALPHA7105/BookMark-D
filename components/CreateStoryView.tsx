@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Book, ShelfTheme, ReadingLevel } from '../types';
 
 interface CreateStoryViewProps {
+  currentUser: UserProfile;
   onCreate: (book: Book) => void;
   onCancel: () => void;
 }
@@ -22,7 +23,7 @@ const CreateStoryView: React.FC<CreateStoryViewProps> = ({ onCreate, onCancel })
     const newBook: Book = {
       id: `custom-${Date.now()}`,
       title: formData.title || "Untitled Masterpiece",
-      author: "Architect 01",
+      author: currentUser.displayName,
       description: formData.customDescription?.trim() !== ''
         ? formData.customDescription
         : `A unique digital journey through the ${formData.theme} realm with a ${formData.vibe} atmosphere. Custom-crafted experience.`,

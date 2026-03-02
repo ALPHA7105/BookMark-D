@@ -1,38 +1,67 @@
-import { SOCIAL_PROFILES } from "../constants";
+import { useState } from "react";
+
+const mockUsers = [
+  { name: "Aisha Khan", avatar: "🪐", achievement: "Finished 5 Sci-Fi books this week" },
+  { name: "Leo Martins", avatar: "📖", achievement: "Completed The Odyssey" },
+  { name: "Zara Noor", avatar: "✨", achievement: "100 day reading streak!" },
+  { name: "Daniel Cho", avatar: "🚀", achievement: "Started Fantasy Journey" },
+  { name: "Maya Patel", avatar: "🌙", achievement: "Unlocked Night Reader badge" },
+  { name: "Omar Saeed", avatar: "📚", achievement: "Finished 3 classics" },
+  { name: "Sofia Rossi", avatar: "🧠", achievement: "Joined Philosophy Circle" },
+  { name: "Jonah Blake", avatar: "🔥", achievement: "Completed Cyberpunk shelf" },
+  { name: "Lina Chen", avatar: "🌌", achievement: "Read 2000 pages this month" },
+  { name: "Arjun Mehta", avatar: "⚡", achievement: "Unlocked Speed Reader" }
+];
 
 export default function SocialView() {
+  const [activeTab, setActiveTab] = useState("feed");
+
   return (
-    <div className="p-8">
-      <h2 className="text-2xl font-black mb-6">Community</h2>
+    <div className="flex h-full">
 
-      <div className="grid md:grid-cols-3 gap-6">
-        {SOCIAL_PROFILES.map(user => (
-          <div
-            key={user.id}
-            className="bg-white/5 border border-white/10 rounded-3xl p-6 hover:bg-white/10 transition"
-          >
-            <div className="text-4xl">{user.avatar}</div>
+      {/* LEFT SIDEBAR */}
+      <div className="w-64 bg-white/5 border-r border-white/10 p-6 flex flex-col gap-4">
 
-            <p className="font-bold mt-3">{user.name}</p>
-            <p className="text-xs text-white/50">{user.badge}</p>
+        <h2 className="text-xl font-black mb-4">Community</h2>
 
-            <p className="text-xs mt-3">
-              Currently reading:
-              <span className="text-cyan-400 ml-1">
-                {user.currentlyReading}
-              </span>
-            </p>
+        <button
+          onClick={() => setActiveTab("feed")}
+          className={`text-left p-3 rounded-xl transition ${
+            activeTab === "feed" ? "bg-cyan-500/20" : "hover:bg-white/5"
+          }`}
+        >
+          🏆 Achievements
+        </button>
 
-            <p className="text-xs text-white/40 mt-1">
-              {user.compatibility}% taste match
-            </p>
+        <button
+          onClick={() => setActiveTab("friends")}
+          className={`text-left p-3 rounded-xl transition ${
+            activeTab === "friends" ? "bg-cyan-500/20" : "hover:bg-white/5"
+          }`}
+        >
+          ➕ Discover Readers
+        </button>
 
-            <button className="mt-4 w-full bg-cyan-500/20 border border-cyan-400/30 rounded-xl text-xs py-2">
-              View Shelf
-            </button>
-          </div>
-        ))}
+        <button
+          onClick={() => setActiveTab("chat")}
+          className={`text-left p-3 rounded-xl transition ${
+            activeTab === "chat" ? "bg-cyan-500/20" : "hover:bg-white/5"
+          }`}
+        >
+          💬 Messages
+        </button>
+
       </div>
+
+      {/* MAIN CONTENT */}
+      <div className="flex-1 p-8 overflow-y-auto">
+
+        {activeTab === "feed" && <AchievementsFeed />}
+        {activeTab === "friends" && <DiscoverFriends />}
+        {activeTab === "chat" && <MockChat />}
+
+      </div>
+
     </div>
   );
 }

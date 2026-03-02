@@ -1,49 +1,56 @@
 import React, { useState, useMemo } from "react";
 
-const userAvatar = localStorage.getItem("bookmarkd-avatar") || 
-  "https://api.dicebear.com/7.x/avataaars/svg?seed=You";
-
 type TabType = "feed" | "discover" | "messages";
 
+/* ---------------- GET REAL USER AVATAR ---------------- */
+
+const getUserAvatar = () => {
+  return (
+    localStorage.getItem("bookmarkd-avatar") ||
+    "https://api.dicebear.com/7.x/avataaars/svg?seed=You"
+  );
+};
+
+/* ---------------- AVATAR STYLES ---------------- */
+
 const AVATAR_STYLES = [
-  'avataaars',
-  'bottts',
-  'pixel-art',
-  'adventurer',
-  'lorelei',
-  'notionists'
+  "avataaars",
+  "bottts",
+  "pixel-art",
+  "adventurer",
+  "lorelei",
+  "notionists"
 ];
 
 /* ---------------- MOCK COMMUNITY ---------------- */
 
-const mockUsers = Array.from({ length: 17 }).map((_, i) => {
+const generateMockUsers = () => {
+  return Array.from({ length: 17 }).map((_, i) => {
+    const name = `Reader_${i + 2}`;
+    const style = AVATAR_STYLES[i % AVATAR_STYLES.length];
 
-  const name = `Reader_${i + 2}`;
-
-  const style = AVATAR_STYLES[i % AVATAR_STYLES.length];
-  const avatar = `https://api.dicebear.com/7.x/${style}/svg?seed=${name}`;
-
-  return {
-    id: i + 1,
-    name,
-    avatar,
-    achievement: [
-      "Finished 3 Sci-Fi books",
-      "Reading streak: 5 days",
-      "Completed Fantasy Saga",
-      "Explored Crime Shelf",
-      "Earned 'Night Owl' badge",
-      "Posted a story",
-      "Reached Level 4 Reader",
-      "Unlocked Mystery Mood"
-    ][i % 8]
-  };
-});
+    return {
+      id: i + 1,
+      name,
+      avatar: `https://api.dicebear.com/7.x/${style}/svg?seed=${name}`,
+      achievement: [
+        "Finished 3 Sci-Fi books",
+        "Reading streak: 5 days",
+        "Completed Fantasy Saga",
+        "Explored Crime Shelf",
+        "Earned 'Night Owl' badge",
+        "Posted a story",
+        "Reached Level 4 Reader",
+        "Unlocked Mystery Mood"
+      ][i % 8]
+    };
+  });
+};
 
 const mockMessages = [
   { from: "Reader_3", text: "That sci-fi shelf is insane." },
   { from: "You", text: "Right?? Fragmented Sky hit different." },
-  { from: "Reader_3", text: "We should compare badges soon." },
+  { from: "Reader_3", text: "We should compare badges soon." }
 ];
 
 /* ---------------- COMPONENT ---------------- */
@@ -52,15 +59,16 @@ const SocialView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>("feed");
   const [selectedFriend, setSelectedFriend] = useState<string | null>(null);
 
+  const userAvatar = getUserAvatar();
+
   /* ---------- Stable Leaderboard ---------- */
 
   const leaderboard = useMemo(() => {
-  
-    const others = mockUsers.map(user => ({
+    const others = generateMockUsers().map(user => ({
       ...user,
       score: Math.floor(Math.random() * 1200) + 200
     }));
-  
+
     const you = {
       id: 999,
       name: "You",
@@ -68,20 +76,22 @@ const SocialView: React.FC = () => {
       achievement: "Your latest reading milestone",
       score: Math.floor(Math.random() * 1200) + 200
     };
-  
-    return [...others, you].sort((a, b) => b.score - a.score);
-  
+
+    return [...others, you]
+      .sort((a, b) => b.score - a.score)
+      .map((user, index) => ({
+        ...user,
+        rank: index + 1
+      }));
   }, [userAvatar]);
 
-  const yourUser = leaderboard.find(u => u.name === "You");
-  const yourRank = leaderboard.findIndex(u => u.name === "You") + 1;
+  const yourRank = leaderboard.find(u => u.name === "You")?.rank || "-";
 
   return (
     <div className="flex gap-8 items-start min-h-[70vh]">
 
-      {/* Sidebar (FIXED HEIGHT) */}
+      {/* Sidebar */}
       <aside className="w-64 h-[600px] sticky top-24 bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col gap-4">
-
         <h2 className="text-lg font-black mb-4">Community</h2>
 
         {["feed", "discover", "messages"].map(tab => (
@@ -112,7 +122,7 @@ const SocialView: React.FC = () => {
 
             <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden">
 
-              {leaderboard.map((user, index) => {
+              {leaderboard.map(user => {
                 const isYou = user.name === "You";
 
                 return (
@@ -125,7 +135,7 @@ const SocialView: React.FC = () => {
                     <div className="flex items-center gap-4">
 
                       <div className="text-lg font-black w-6">
-                        #{index + 1}
+                        #{user.rank}
                       </div>
 
                       <img
@@ -178,21 +188,23 @@ const SocialView: React.FC = () => {
             </h3>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
-              {mockUsers.map(user => (
-                <div
-                  key={user.id}
-                  className="bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col items-center gap-4 hover:bg-white/10 transition-all"
-                >
-                  <img
-                    src={user.avatar}
-                    className="w-20 h-20 rounded-2xl object-cover"
-                  />
-                  <p className="font-black">{user.name}</p>
-                  <button className="px-4 py-2 bg-pink-500 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-105 transition-transform">
-                    Add Friend
-                  </button>
-                </div>
-              ))}
+              {leaderboard
+                .filter(user => user.name !== "You")
+                .map(user => (
+                  <div
+                    key={user.id}
+                    className="bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col items-center gap-4 hover:bg-white/10 transition-all"
+                  >
+                    <img
+                      src={user.avatar}
+                      className="w-20 h-20 rounded-2xl object-cover"
+                    />
+                    <p className="font-black">{user.name}</p>
+                    <button className="px-4 py-2 bg-pink-500 rounded-xl text-xs font-black uppercase tracking-widest hover:scale-105 transition-transform">
+                      Add Friend
+                    </button>
+                  </div>
+                ))}
             </div>
           </div>
         )}
@@ -201,26 +213,26 @@ const SocialView: React.FC = () => {
         {activeTab === "messages" && (
           <div className="flex gap-6">
 
-            {/* Friend List */}
             <div className="w-64 bg-white/5 border border-white/10 rounded-3xl p-4 space-y-4">
-              {mockUsers.slice(0, 8).map(user => (
-                <div
-                  key={user.id}
-                  onClick={() => setSelectedFriend(user.name)}
-                  className={`p-3 rounded-xl cursor-pointer transition-all ${
-                    selectedFriend === user.name
-                      ? "bg-pink-500 text-white"
-                      : "hover:bg-white/10"
-                  }`}
-                >
-                  {user.name}
-                </div>
-              ))}
+              {leaderboard
+                .filter(user => user.name !== "You")
+                .slice(0, 8)
+                .map(user => (
+                  <div
+                    key={user.id}
+                    onClick={() => setSelectedFriend(user.name)}
+                    className={`p-3 rounded-xl cursor-pointer transition-all ${
+                      selectedFriend === user.name
+                        ? "bg-pink-500 text-white"
+                        : "hover:bg-white/10"
+                    }`}
+                  >
+                    {user.name}
+                  </div>
+                ))}
             </div>
 
-            {/* Chat Area */}
             <div className="flex-1 bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col justify-between">
-
               {selectedFriend ? (
                 <>
                   <div className="space-y-4 mb-6">

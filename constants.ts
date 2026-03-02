@@ -589,7 +589,7 @@ export const INITIAL_BOOKS: Book[] = [
     author: 'Arthur Conan Doyle',
     description: 'Sherlock Holmes and Dr. Watson investigate a legendary curse on the moors of Devonshire.',
     theme: 'crime',
-    coverImage: 'https://res.cloudinary.com/bloomsbury-atlas/image/upload/w_360,c_scale,dpr_1.5/jackets/9781847494962.jpg',
+    coverImage: 'https://m.media-amazon.com/images/I/71UPwS4mk9L._AC_UF1000,1000_QL80_.jpg',
     tags: ['Sherlock', 'Detective', 'Mystery'],
     vibe: 'Suspenseful & Clever',
     readCount: '38.2K',

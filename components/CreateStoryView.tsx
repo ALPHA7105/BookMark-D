@@ -23,7 +23,7 @@ const CreateStoryView: React.FC<CreateStoryViewProps> = ({ onCreate, onCancel })
     const newBook: Book = {
       id: `custom-${Date.now()}`,
       title: formData.title || "Untitled Masterpiece",
-      author: 'You'
+      author: 'You',
       description: formData.customDescription?.trim() !== ''
         ? formData.customDescription
         : `A unique digital journey through the ${formData.theme} realm with a ${formData.vibe} atmosphere. Custom-crafted experience.`,

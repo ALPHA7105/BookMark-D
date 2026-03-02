@@ -1,5 +1,8 @@
 import React, { useState, useMemo } from "react";
 
+const userAvatar = localStorage.getItem("bookmarkd-avatar") || 
+  "https://api.dicebear.com/7.x/avataaars/svg?seed=You";
+
 type TabType = "feed" | "discover" | "messages";
 
 const AVATAR_STYLES = [
@@ -13,8 +16,9 @@ const AVATAR_STYLES = [
 
 /* ---------------- MOCK COMMUNITY ---------------- */
 
-const mockUsers = Array.from({ length: 18 }).map((_, i) => {
-  const name = i === 6 ? "Reader_1" : `Reader_${i + 1}`;
+const mockUsers = Array.from({ length: 17 }).map((_, i) => {
+
+  const name = `Reader_${i + 2}`;
 
   const style = AVATAR_STYLES[i % AVATAR_STYLES.length];
   const avatar = `https://api.dicebear.com/7.x/${style}/svg?seed=${name}`;
@@ -52,17 +56,25 @@ const SocialView: React.FC = () => {
 
   const leaderboard = useMemo(() => {
   
-    const withScores = mockUsers.map(user => ({
+    const others = mockUsers.map(user => ({
       ...user,
       score: Math.floor(Math.random() * 1200) + 200
     }));
   
-    return withScores.sort((a, b) => b.score - a.score);
+    const you = {
+      id: 999,
+      name: "You",
+      avatar: userAvatar,
+      achievement: "Your latest reading milestone",
+      score: Math.floor(Math.random() * 1200) + 200
+    };
   
-  }, []);
+    return [...others, you].sort((a, b) => b.score - a.score);
+  
+  }, [userAvatar]);
 
-  const yourUser = leaderboard.find(u => u.name === "Reader_1");
-  const yourRank = leaderboard.findIndex(u => u.name === "Reader_1") + 1;
+  const yourUser = leaderboard.find(u => u.name === "You");
+  const yourRank = leaderboard.findIndex(u => u.name === "You") + 1;
 
   return (
     <div className="flex gap-8 items-start min-h-[70vh]">
@@ -101,7 +113,7 @@ const SocialView: React.FC = () => {
             <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden">
 
               {leaderboard.map((user, index) => {
-                const isYou = user.name === "Reader_1";
+                const isYou = user.name === "You";
 
                 return (
                   <div

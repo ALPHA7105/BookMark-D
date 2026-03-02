@@ -1,19 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 
 type TabType = "feed" | "discover" | "messages";
 
-const mockUsers = Array.from({ length: 18 }).map((_, i) => ({
-  id: i,
-  name: `Reader_${i + 1}`,
-  avatar: `https://i.pravatar.cc/150?img=${i + 10}`,
-  achievement: [
-    "Completed Dune",
-    "Earned Cosmic Voyager Badge",
-    "Finished 5 Fantasy Books",
-    "Master Detective Badge Unlocked",
-    "Cyberpunk Explorer Badge",
-  ][i % 5],
-}));
+/* ---------------- MOCK COMMUNITY ---------------- */
+
+const mockUsers = Array.from({ length: 18 }).map((_, i) => {
+  const name = i === 6 ? "Reader_1" : `Reader_${i + 1}`;
+
+  return {
+    id: i + 1,
+    name,
+    avatar: `https://api.dicebear.com/7.x/thumbs/svg?seed=${name}`,
+    achievement: [
+      "Finished 3 Sci-Fi books",
+      "Reading streak: 5 days",
+      "Completed Fantasy Saga",
+      "Explored Crime Shelf",
+      "Earned 'Night Owl' badge",
+      "Posted a story",
+      "Reached Level 4 Reader",
+      "Unlocked Mystery Mood"
+    ][i % 8]
+  };
+});
 
 const mockMessages = [
   { from: "Reader_3", text: "That sci-fi shelf is insane." },
@@ -21,15 +30,32 @@ const mockMessages = [
   { from: "Reader_3", text: "We should compare badges soon." },
 ];
 
+/* ---------------- COMPONENT ---------------- */
+
 const SocialView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>("feed");
   const [selectedFriend, setSelectedFriend] = useState<string | null>(null);
 
+  /* ---------- Stable Leaderboard ---------- */
+
+  const leaderboard = useMemo(() => {
+    return mockUsers
+      .map(user => ({
+        ...user,
+        score: Math.floor(Math.random() * 1200) + 200
+      }))
+      .sort((a, b) => b.score - a.score);
+  }, []);
+
+  const yourIndex = leaderboard.findIndex(u => u.name === "Reader_1");
+  const yourRank = yourIndex + 1;
+
   return (
     <div className="flex gap-8 items-start min-h-[70vh]">
 
-      {/* Sidebar */}
-      <aside className="w-64 bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col gap-4">
+      {/* Sidebar (FIXED HEIGHT) */}
+      <aside className="w-64 h-[600px] sticky top-24 bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col gap-4">
+
         <h2 className="text-lg font-black mb-4">Community</h2>
 
         {["feed", "discover", "messages"].map(tab => (
@@ -50,64 +76,61 @@ const SocialView: React.FC = () => {
       {/* Content */}
       <div className="flex-1">
 
-        {/* FEED */}
+        {/* ---------------- LEADERBOARD ---------------- */}
         {activeTab === "feed" && (
           <div className="space-y-6">
-            <h3 className="text-2xl font-black mb-6">Community Leaderboard</h3>
+
+            <h3 className="text-2xl font-black mb-6">
+              Community Leaderboard
+            </h3>
 
             <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden">
 
-              {mockUsers
-                .map(user => ({
-                  ...user,
-                  score: Math.floor(Math.random() * 1200) + 200
-                }))
-                .sort((a, b) => b.score - a.score)
-                .map((user, index) => {
+              {leaderboard.map((user, index) => {
+                const isYou = user.name === "Reader_1";
 
-                  const isYou = user.name === "Reader_1";
+                return (
+                  <div
+                    key={user.id}
+                    className={`flex items-center justify-between px-6 py-4 border-b border-white/5 ${
+                      isYou ? "bg-pink-500/20" : "hover:bg-white/5"
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
 
-                  return (
-                    <div
-                      key={user.id}
-                      className={`flex items-center justify-between px-6 py-4 border-b border-white/5 ${
-                        isYou ? "bg-pink-500/20" : "hover:bg-white/5"
-                      }`}
-                    >
-                      <div className="flex items-center gap-4">
-                        <div className="text-lg font-black w-6">
-                          #{index + 1}
-                        </div>
-
-                        <img
-                          src={user.avatar}
-                          className="w-12 h-12 rounded-xl object-cover"
-                        />
-
-                        <div>
-                          <p className="font-black">
-                            {isYou ? "You" : user.name}
-                          </p>
-                          <p className="text-xs text-white/50">
-                            {user.achievement}
-                          </p>
-                        </div>
+                      <div className="text-lg font-black w-6">
+                        #{index + 1}
                       </div>
-        
-                      <div className="font-black text-cyan-400">
-                        {user.score} XP
+
+                      <img
+                        src={user.avatar}
+                        className="w-12 h-12 rounded-xl object-cover"
+                      />
+
+                      <div>
+                        <p className="font-black">
+                          {isYou ? "You" : user.name}
+                        </p>
+                        <p className="text-xs text-white/50">
+                          {user.achievement}
+                        </p>
                       </div>
                     </div>
-                  );
-                })}
+
+                    <div className="font-black text-cyan-400">
+                      {user.score} XP
+                    </div>
+                  </div>
+                );
+              })}
             </div>
 
-            {/* Your Position */}
+            {/* YOUR POSITION */}
             <div className="mt-8 bg-gradient-to-br from-pink-500/20 to-purple-500/20 border border-pink-500/30 p-6 rounded-3xl">
               <p className="text-xs uppercase tracking-widest text-white/50 mb-2">
                 Your Position
               </p>
-              <p className="text-3xl font-black">#7</p>
+              <p className="text-3xl font-black">#{yourRank}</p>
               <p className="text-white/60 text-sm mt-1">
                 Keep reading to climb the ranks.
               </p>
@@ -115,10 +138,13 @@ const SocialView: React.FC = () => {
           </div>
         )}
 
-        {/* DISCOVER */}
+        {/* ---------------- DISCOVER ---------------- */}
         {activeTab === "discover" && (
           <div className="space-y-6">
-            <h3 className="text-2xl font-black mb-6">Discover Readers</h3>
+
+            <h3 className="text-2xl font-black mb-6">
+              Discover Readers
+            </h3>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {mockUsers.map(user => (
@@ -140,7 +166,7 @@ const SocialView: React.FC = () => {
           </div>
         )}
 
-        {/* MESSAGES */}
+        {/* ---------------- MESSAGES ---------------- */}
         {activeTab === "messages" && (
           <div className="flex gap-6">
 
@@ -163,6 +189,7 @@ const SocialView: React.FC = () => {
 
             {/* Chat Area */}
             <div className="flex-1 bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col justify-between">
+
               {selectedFriend ? (
                 <>
                   <div className="space-y-4 mb-6">
@@ -196,6 +223,7 @@ const SocialView: React.FC = () => {
                 </div>
               )}
             </div>
+
           </div>
         )}
 

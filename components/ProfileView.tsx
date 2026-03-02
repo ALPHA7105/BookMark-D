@@ -182,8 +182,8 @@ const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
                <div className="relative z-10 flex flex-col sm:flex-row gap-6 items-center">
                   <div className="w-24 h-24 bg-black/40 rounded-full flex items-center justify-center text-4xl shadow-2xl border-4 border-white/5">👑</div>
                   <div className="text-center sm:text-left">
-                    <h4 className="font-black text-2xl">The True Heir</h4>
-                    <p className="text-white/60 text-sm">Achieved in 'The Gilded Crown' • March 02</p>
+                    <h4 className="font-black text-2xl">Captain Sci-Fi</h4>
+                    <p className="text-white/60 text-sm">Achieved in 'The War of the Worlds' • March 02</p>
                   </div>
                   <button className="sm:ml-auto bg-white text-black px-8 py-3 rounded-2xl font-black text-xs uppercase tracking-widest hover:scale-105 transition-transform shadow-xl">Share Card</button>
                </div>

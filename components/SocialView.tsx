@@ -26,7 +26,7 @@ const SocialView: React.FC = () => {
   const [selectedFriend, setSelectedFriend] = useState<string | null>(null);
 
   return (
-    <div className="flex gap-8 min-h-[70vh]">
+    <div className="flex gap-8 items-start min-h-[70vh]">
 
       {/* Sidebar */}
       <aside className="w-64 bg-white/5 border border-white/10 rounded-3xl p-6 flex flex-col gap-4">
@@ -53,25 +53,65 @@ const SocialView: React.FC = () => {
         {/* FEED */}
         {activeTab === "feed" && (
           <div className="space-y-6">
-            <h3 className="text-2xl font-black mb-6">Community Achievements</h3>
+            <h3 className="text-2xl font-black mb-6">Community Leaderboard</h3>
 
-            {mockUsers.map(user => (
-              <div
-                key={user.id}
-                className="bg-white/5 border border-white/10 rounded-3xl p-6 flex gap-4 items-center hover:bg-white/10 transition-all"
-              >
-                <img
-                  src={user.avatar}
-                  className="w-14 h-14 rounded-xl object-cover"
-                />
-                <div>
-                  <p className="font-black">{user.name}</p>
-                  <p className="text-sm text-white/60">
-                    {user.achievement}
-                  </p>
-                </div>
-              </div>
-            ))}
+            <div className="bg-white/5 border border-white/10 rounded-3xl overflow-hidden">
+
+              {mockUsers
+                .map(user => ({
+                  ...user,
+                  score: Math.floor(Math.random() * 1200) + 200
+                }))
+                .sort((a, b) => b.score - a.score)
+                .map((user, index) => {
+
+                  const isYou = user.name === "Reader_1";
+
+                  return (
+                    <div
+                      key={user.id}
+                      className={`flex items-center justify-between px-6 py-4 border-b border-white/5 ${
+                        isYou ? "bg-pink-500/20" : "hover:bg-white/5"
+                      }`}
+                    >
+                      <div className="flex items-center gap-4">
+                        <div className="text-lg font-black w-6">
+                          #{index + 1}
+                        </div>
+
+                        <img
+                          src={user.avatar}
+                          className="w-12 h-12 rounded-xl object-cover"
+                        />
+
+                        <div>
+                          <p className="font-black">
+                            {isYou ? "You" : user.name}
+                          </p>
+                          <p className="text-xs text-white/50">
+                            {user.achievement}
+                          </p>
+                        </div>
+                      </div>
+        
+                      <div className="font-black text-cyan-400">
+                        {user.score} XP
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+
+            {/* Your Position */}
+            <div className="mt-8 bg-gradient-to-br from-pink-500/20 to-purple-500/20 border border-pink-500/30 p-6 rounded-3xl">
+              <p className="text-xs uppercase tracking-widest text-white/50 mb-2">
+                Your Position
+              </p>
+              <p className="text-3xl font-black">#7</p>
+              <p className="text-white/60 text-sm mt-1">
+                Keep reading to climb the ranks.
+              </p>
+            </div>
           </div>
         )}
 

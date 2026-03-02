@@ -213,12 +213,12 @@ const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
             <h3 className="font-black text-lg mb-6 relative z-10">Reading Recommendation</h3>
             <div className="flex gap-4 items-center relative z-10">
               <div className="w-20 h-28 rounded-xl bg-black/40 border border-white/10 shadow-xl overflow-hidden">
-                <img src="https://images.unsplash.com/photo-1614728263952-84ea206f25ab?q=80&w=200&auto=format&fit=crop" className="w-full h-full object-cover" />
+                <img src="https://cdn.kobo.com/book-images/fd82bd4a-81fa-4831-856f-4306d7b78e9f/1200/1200/False/the-invisible-man-279.jpg" className="w-full h-full object-cover" />
               </div>
               <div>
-                <p className="font-black text-white">Fragmented Sky</p>
+                <p className="font-black text-white">The Invisible Man</p>
                 <p className="text-[10px] uppercase tracking-widest text-cyan-400 font-black mt-1">Sci-Fi Pick</p>
-                <p className="text-xs text-white/40 mt-2">Matches your recent interest in Cyberpunk.</p>
+                <p className="text-xs text-white/40 mt-2">Matches your recent interest in Science Fiction.</p>
               </div>
             </div>
           </section>

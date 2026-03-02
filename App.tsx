@@ -405,6 +405,13 @@ const App: React.FC = () => {
           book={selectedBook} 
           onClose={() => setSelectedBook(null)} 
           onRead={(level) => handleStartReading(selectedBook, level)}
+          onDelete={(bookId) => {
+            const updatedBooks = userBooks.filter(b => b.id !== bookId);
+            setUserBooks(updatedBooks);
+            localStorage.setItem('bookmarkd_user_books', JSON.stringify(updatedBooks));
+            setSelectedBook(null);
+          }}
+          isOwnBook={userBooks.some(b => b.id === selectedBook.id)}
         />
       )}
 

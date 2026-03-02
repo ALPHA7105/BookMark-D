@@ -132,7 +132,7 @@ const App: React.FC = () => {
       title: story.title,
       author: story.origin,
       description: story.hook,
-      theme: shorts,
+      theme: 'shorts',
       coverImage: story.coverImage,
       tags: [story.genre, story.tone],
       vibe: story.tone,

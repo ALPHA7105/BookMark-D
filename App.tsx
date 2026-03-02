@@ -357,7 +357,7 @@ const App: React.FC = () => {
         )}
 
         {activeTab === 'create' && (
-          <CreateStoryView onCreate={handleCreateStory} onCancel={() => setActiveTab('discover')} />
+          <CreateStoryView currentUser={currentUser} onCreate={handleCreateStory} onCancel={() => setActiveTab('discover')} />
         )}
 
         {activeTab === 'profile' && currentUser && (

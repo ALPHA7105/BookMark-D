@@ -58,8 +58,8 @@ const mockMessages = [
 const SocialView: React.FC = () => {
   const [activeTab, setActiveTab] = useState<TabType>("feed");
   const [selectedFriend, setSelectedFriend] = useState<string | null>(null);
-
-  const userAvatar = getUserAvatar();
+  
+  const [userAvatar, setUserAvatar] = useState<string>(() => getUserAvatar());
 
   /* ---------- Stable Leaderboard ---------- */
 
@@ -79,10 +79,7 @@ const SocialView: React.FC = () => {
 
     return [...others, you]
       .sort((a, b) => b.score - a.score)
-      .map((user, index) => ({
-        ...user,
-        rank: index + 1
-      }));
+      .map((user, index) => ({ ...user, rank: index + 1 }));
   }, [userAvatar]);
 
   const yourRank = leaderboard.find(u => u.name === "You")?.rank || "-";

@@ -8,6 +8,8 @@ interface PreviewModalProps {
   book: Book;
   onClose: () => void;
   onRead?: (level: ReadingLevel) => void;
+  onDelete?: (bookId: string) => void; // new
+  isOwnBook?: boolean; // optional flag to show delete only for your own stories
 }
 
 const ProgressBar = ({ colorClass = "bg-cyan-400" }: { colorClass?: string }) => (
@@ -119,6 +121,15 @@ const PreviewModal: React.FC<PreviewModalProps> = ({ book, onClose, onRead }) =>
               <button className="w-20 h-20 bg-white/5 border border-white/10 rounded-3xl flex items-center justify-center hover:bg-white/10 transition-colors text-2xl">
                 💖
               </button>
+              {isOwnBook && (
+                <button
+                  onClick={() => onDelete?.(book.id)}
+                  className="w-20 h-20 bg-red-600/20 border border-red-400 rounded-3xl flex items-center justify-center hover:bg-red-600/40 transition-colors text-2xl font-black"
+                  title="Delete this story"
+                >
+                  🗑️
+                </button>
+              )}
             </div>
           </div>
         </div>

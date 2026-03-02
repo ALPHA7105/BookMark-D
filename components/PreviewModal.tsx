@@ -18,7 +18,7 @@ const ProgressBar = ({ colorClass = "bg-cyan-400" }: { colorClass?: string }) =>
   </div>
 );
 
-const PreviewModal: React.FC<PreviewModalProps> = ({ book, onClose, onRead }) => {
+const PreviewModal: React.FC<PreviewModalProps> = ({ book, onClose, onRead, onDelete, isOwnBook }) => {
   const [loading, setLoading] = useState(true);
   const [aiData, setAiData] = useState<StoryResponse | null>(null);
   const [level, setLevel] = useState<ReadingLevel>(book.readingLevel || 'Standard');

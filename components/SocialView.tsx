@@ -2,15 +2,27 @@ import React, { useState, useMemo } from "react";
 
 type TabType = "feed" | "discover" | "messages";
 
+const AVATAR_STYLES = [
+  'avataaars',
+  'bottts',
+  'pixel-art',
+  'adventurer',
+  'lorelei',
+  'notionists'
+];
+
 /* ---------------- MOCK COMMUNITY ---------------- */
 
 const mockUsers = Array.from({ length: 18 }).map((_, i) => {
   const name = i === 6 ? "Reader_1" : `Reader_${i + 1}`;
 
+  const style = AVATAR_STYLES[i % AVATAR_STYLES.length];
+  const avatar = `https://api.dicebear.com/7.x/${style}/svg?seed=${name}`;
+
   return {
     id: i + 1,
     name,
-    avatar: `https://api.dicebear.com/7.x/thumbs/svg?seed=${name}`,
+    avatar,
     achievement: [
       "Finished 3 Sci-Fi books",
       "Reading streak: 5 days",
@@ -39,16 +51,18 @@ const SocialView: React.FC = () => {
   /* ---------- Stable Leaderboard ---------- */
 
   const leaderboard = useMemo(() => {
-    return mockUsers
-      .map(user => ({
-        ...user,
-        score: Math.floor(Math.random() * 1200) + 200
-      }))
-      .sort((a, b) => b.score - a.score);
+  
+    const withScores = mockUsers.map(user => ({
+      ...user,
+      score: Math.floor(Math.random() * 1200) + 200
+    }));
+  
+    return withScores.sort((a, b) => b.score - a.score);
+  
   }, []);
 
-  const yourIndex = leaderboard.findIndex(u => u.name === "Reader_1");
-  const yourRank = yourIndex + 1;
+  const yourUser = leaderboard.find(u => u.name === "Reader_1");
+  const yourRank = leaderboard.findIndex(u => u.name === "Reader_1") + 1;
 
   return (
     <div className="flex gap-8 items-start min-h-[70vh]">
@@ -130,7 +144,12 @@ const SocialView: React.FC = () => {
               <p className="text-xs uppercase tracking-widest text-white/50 mb-2">
                 Your Position
               </p>
-              <p className="text-3xl font-black">#{yourRank}</p>
+              <p className="text-3xl font-black">
+                #{yourRank}
+              </p>
+              <p className="text-white/40 text-xs mt-1">
+                out of {leaderboard.length}
+              </p>
               <p className="text-white/60 text-sm mt-1">
                 Keep reading to climb the ranks.
               </p>

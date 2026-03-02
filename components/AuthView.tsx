@@ -34,6 +34,7 @@ const AuthView: React.FC<AuthViewProps> = ({ onComplete }) => {
   };
 
   const handleFinish = () => {
+    localStorage.setItem("bookmarkd-avatar", formData.avatar); // <-- add this
     const newProfile: UserProfile = {
       username: formData.username || "new_reader",
       displayName: formData.displayName || "Explorer",

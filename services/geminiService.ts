@@ -91,7 +91,7 @@ export async function generateInteractiveChapter(
 
   try {
     const response = await getAIInstance().models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash',
       contents: prompt,
       config: {
         responseMimeType: "application/json",
@@ -154,7 +154,7 @@ export async function generateChapterAudio(text: string): Promise<string | undef
 export async function getWordDefinition(word: string, context: string, level: ReadingLevel): Promise<{ definition: string; example: string } | null> {
   try {
     const response = await getAIInstance().models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash',
       contents: `Provide a concise, teen-friendly definition for the word "${word}" as used in this context: "${context}". 
       Tailor the tone for a ${level} reading level. Keep it under 25 words.`,
       config: {
@@ -178,7 +178,7 @@ export async function getWordDefinition(word: string, context: string, level: Re
 export async function generateBookCover(bookTitle: string): Promise<string | null> {
   try {
     const response = await getAIInstance().models.generateContent({
-      model: 'gemini-2.0-flash-preview',
+      model: 'gemini-2.5-flash-image',
       contents: [
         {
           parts: [

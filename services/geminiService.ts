@@ -33,7 +33,7 @@ STRICT FIDELITY FOR CLASSIC ABRIDGMENTS:
 export async function generateStoryPreview(title: string, author: string, vibe: string): Promise<StoryResponse> {
   try {
     const response = await getAIInstance().models.generateContent({
-      model: 'gemini-3-flash-preview',
+      model: 'gemini-2.5-flash',
       contents: `Generate an interactive preview for the book "${title}" by ${author}. Vibe: "${vibe}". Provide a snappy summary, a shocking potential plot twist, and a Gen-Z style vibe rating. ${CLASSIC_INSTRUCTION}`,
       config: {
         responseMimeType: "application/json",

@@ -212,7 +212,7 @@ const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
                     className={`relative p-6 rounded-3xl border flex flex-col items-center text-center transition-all duration-500 cursor-pointer
                       ${unlocked 
                         ? "hover:scale-105 text-white" 
-                        : "bg-white/5 text-white/30 grayscale opacity-60 hover:opacity-80"
+                        : "bg-white/5 text-white/40 opacity-70 hover:opacity-90"
                       }`}
                   >
                     {!unlocked && (

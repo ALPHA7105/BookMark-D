@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { UserProfile } from '../types';
 import AvatarPicker from './AvatarPicker';
-import { BADGE_CATALOG, BADGE_RARITY_COLORS } from "../constants";
+import { BADGE_CATALOG, BADGE_RARITY_COLORS, BADGE_RARITY_GLOW } from "../constants";
 
 interface ProfileViewProps {
   user: UserProfile;
@@ -10,6 +10,7 @@ interface ProfileViewProps {
 
 const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [selectedBadge, setSelectedBadge] = useState<null | typeof BADGE_CATALOG[number]>(null);
   const [editForm, setEditForm] = useState({
     displayName: user.displayName,
     bio: user.bio,
@@ -189,21 +190,36 @@ const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
           <section>
             <div className="flex items-center justify-between mb-8">
               <h3 className="text-2xl font-black">Achievement Case</h3>
-              <span className="text-xs font-bold text-white/30 uppercase tracking-widest">{user.badges.length} / 50 Unlocked</span>
+              <span className="text-xs font-bold text-white/30 uppercase tracking-widest">
+                {user.badges.length} / {BADGE_CATALOG.length} Unlocked
+              </span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
               {BADGE_CATALOG.map(def => {
                 const unlocked = user.badges.find(b => b.id === def.id);
+                const color = BADGE_RARITY_COLORS[def.rarity];
+                const glow = BADGE_RARITY_GLOW[def.rarity];
               
                 return (
                   <div
                     key={def.id}
-                    className={`p-6 rounded-3xl border flex flex-col items-center text-center transition-all duration-500 ${
-                      unlocked
-                        ? rarityStyles[def.rarity]
-                        : "bg-white/5 border-white/5 text-white/20 grayscale opacity-50"
-                    }`}
+                    onClick={() => setSelectedBadge(def)}
+                    style={{
+                      borderColor: color,
+                      boxShadow: unlocked ? glow : "none"
+                    }}
+                    className={`relative p-6 rounded-3xl border flex flex-col items-center text-center transition-all duration-500 cursor-pointer
+                      ${unlocked 
+                        ? "bg-white/10 hover:scale-105" 
+                        : "bg-white/5 text-white/30 grayscale opacity-60 hover:opacity-80"
+                      }`}
                   >
+                    {!unlocked && (
+                      <div className="absolute top-3 right-3 text-sm">
+                        🔒
+                      </div>
+                    )}
+              
                     <span className={`text-4xl mb-4 transition-all ${
                       unlocked ? "drop-shadow-lg" : "blur-[1px]"
                     }`}>
@@ -214,8 +230,11 @@ const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
                       {def.name}
                     </span>
               
-                    <span className="text-[10px] uppercase tracking-widest opacity-60 font-black">
-                      {unlocked ? def.rarity : "Locked"}
+                    <span 
+                      className="text-[10px] uppercase tracking-widest font-black"
+                      style={{ color }}
+                    >
+                      {def.rarity.toUpperCase()}
                     </span>
                   </div>
                 );
@@ -276,6 +295,43 @@ const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
           </section>
         </div>
       </div>
+      {selectedBadge && (
+        <div className="fixed inset-0 bg-black/70 backdrop-blur-md flex items-center justify-center z-50">
+          <div className="bg-[#0f172a] p-10 rounded-[2rem] border border-white/10 max-w-md w-full relative animate-[fade-in_0.3s_ease-out]">
+            
+            <button 
+              onClick={() => setSelectedBadge(null)}
+              className="absolute top-4 right-4 text-white/40 hover:text-white"
+            >
+              ✕
+            </button>
+      
+            <div className="text-center">
+              <div className="text-5xl mb-4">
+                {selectedBadge.icon}
+              </div>
+      
+              <h3 className="text-2xl font-black mb-2">
+                {selectedBadge.name}
+              </h3>
+      
+              <p className="text-white/60 text-sm mb-6">
+                {selectedBadge.description}
+              </p>
+      
+              <div className="bg-white/5 p-4 rounded-2xl border border-white/10">
+                <p className="text-[10px] uppercase tracking-widest text-white/40 font-black mb-2">
+                  How to Unlock
+                </p>
+                <p className="text-white/80 text-sm">
+                  {selectedBadge.requirement}
+                </p>
+              </div>
+            </div>
+      
+          </div>
+        </div>
+      )}
     </div>
   );
 };

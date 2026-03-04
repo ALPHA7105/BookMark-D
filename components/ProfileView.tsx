@@ -132,6 +132,37 @@ const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
                 <p className="text-lg text-white/60 max-w-lg mb-8 leading-relaxed mx-auto md:mx-0 font-light">{user.bio}</p>
                 
                 <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                  {user.badges.length > 0 && (
+                    <div className="mt-10">
+                      <h4 className="text-xs font-black uppercase tracking-widest text-white/30 mb-4 text-center md:text-left">
+                        Featured Badges
+                      </h4>
+                  
+                      <div className="flex flex-wrap justify-center md:justify-start gap-4">
+                        {user.badges.slice(0, 3).map(badge => (
+                          <div
+                            key={badge.id}
+                            className={`relative px-6 py-5 rounded-3xl border backdrop-blur-md transition-all duration-500 hover:scale-110 hover:shadow-xl ${
+                              rarityStyles[badge.rarity as keyof typeof rarityStyles]
+                            }`}
+                          >
+                            <div className="flex flex-col items-center text-center">
+                              <span className="text-3xl mb-2 drop-shadow-lg">
+                                {badge.icon}
+                              </span>
+                              <span className="text-sm font-black">
+                                {badge.name}
+                              </span>
+                            </div>
+                  
+                            {badge.rarity === "legendary" && (
+                              <div className="absolute inset-0 rounded-3xl border-2 border-amber-400 animate-pulse pointer-events-none" />
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
                   <div className="bg-white/5 px-6 py-4 rounded-3xl border border-white/10 backdrop-blur-md">
                     <span className="block text-2xl font-black text-white">{user.stats.booksRead}</span>
                     <span className="text-[10px] uppercase tracking-widest text-white/40 font-black">Books Read</span>

@@ -720,37 +720,52 @@ export const SOCIAL_PROFILES = [
 
 export type BadgeRarity = "common" | "rare" | "epic" | "legendary";
 
+export const BADGE_RARITY_COLORS: Record<BadgeRarity, string> = {
+  common: "#9CA3AF",      // soft gray
+  rare: "#3B82F6",        // blue
+  epic: "#8B5CF6",        // purple
+  legendary: "#F59E0B",   // gold
+};
+
+export const BADGE_RARITY_GLOW: Record<BadgeRarity, string> = {
+  common: "0 0 5px rgba(156,163,175,0.5)",
+  rare: "0 0 8px rgba(59,130,246,0.6)",
+  epic: "0 0 12px rgba(139,92,246,0.7)",
+  legendary: "0 0 18px rgba(245,158,11,0.9)",
+};
+
 export interface BadgeDefinition {
   id: string;
   name: string;
   description: string;
   icon: string;
   rarity: BadgeRarity;
+  requirement: string;
 }
 
 export const BADGE_CATALOG: BadgeDefinition[] = [
 
   // 🔥 Streak Badges
-  { id: "streak_3", name: "Spark Reader", description: "3 Day Reading Streak", icon: "🔥", rarity: "common" },
-  { id: "streak_7", name: "Flame Keeper", description: "7 Day Reading Streak", icon: "🔥", rarity: "rare" },
-  { id: "streak_30", name: "Inferno Mind", description: "30 Day Reading Streak", icon: "🔥", rarity: "epic" },
+  { id: "streak_3", name: "Spark Reader", description: "3 Day Reading Streak", icon: "🔥", rarity: "common", requirement: "Read for 3 consecutive days." },
+  { id: "streak_7", name: "Flame Keeper", description: "7 Day Reading Streak", icon: "🔥", rarity: "rare", requirement: "Read for 7 consecutive days." },
+  { id: "streak_30", name: "Inferno Mind", description: "30 Day Reading Streak", icon: "🔥", rarity: "epic", requirement: "Read for 30 consecutive days." },
 
   // 📖 Books Created
-  { id: "created_1", name: "First Chapter", description: "Created your first book", icon: "✍️", rarity: "common" },
-  { id: "created_5", name: "Story Architect", description: "Created 5 books", icon: "📚", rarity: "rare" },
-  { id: "created_10", name: "World Builder", description: "Created 10 books", icon: "🌍", rarity: "epic" },
+  { id: "created_1", name: "First Chapter", description: "Created your first book", icon: "✍️", rarity: "common", requirement: "Create 1 book." },
+  { id: "created_5", name: "Story Architect", description: "Created 5 books", icon: "📚", rarity: "rare", requirement: "Create 5 books." },
+  { id: "created_10", name: "World Builder", description: "Created 10 books", icon: "🌍", rarity: "epic", requirement: "Create 10 books." },
 
   // 👥 Followers
-  { id: "followers_1", name: "First Signal", description: "Got your first follower", icon: "📡", rarity: "common" },
-  { id: "followers_10", name: "Rising Voice", description: "Reached 10 followers", icon: "📣", rarity: "rare" },
-  { id: "followers_100", name: "Literary Icon", description: "Reached 100 followers", icon: "👑", rarity: "legendary" },
+  { id: "followers_1", name: "First Signal", description: "Got your first follower", icon: "📡", rarity: "common", requirement: "Gain 1 follower." },
+  { id: "followers_10", name: "Rising Voice", description: "Reached 10 followers", icon: "📣", rarity: "rare", requirement: "Gain 10 followers." },
+  { id: "followers_100", name: "Literary Icon", description: "Reached 100 followers", icon: "👑", rarity: "legendary", requirement: "Gain 100 followers." },
 
   // ⏳ Reading Time
-  { id: "time_1h", name: "Focused Mind", description: "1 hour of total reading", icon: "⏳", rarity: "common" },
-  { id: "time_1d", name: "Time Traveler", description: "1 full day spent reading", icon: "🕰️", rarity: "epic" },
+  { id: "time_1h", name: "Focused Mind", description: "1 hour of total reading", icon: "⏳", rarity: "common", requirement: "Read for 1 total hour." },
+  { id: "time_1d", name: "Time Traveler", description: "1 full day spent reading", icon: "🕰️", rarity: "epic", requirement: "Accumulate 24 hours of reading time." },
 
   // 🧠 Engagement
-  { id: "choices_10", name: "Pathfinder", description: "Made 10 story choices", icon: "🧭", rarity: "common" },
-  { id: "choices_100", name: "Master of Fates", description: "Made 100 story choices", icon: "⚡", rarity: "legendary" },
+  { id: "choices_10", name: "Pathfinder", description: "Made 10 story choices", icon: "🧭", rarity: "common", requirement: "Make 10 story choices." },
+  { id: "choices_100", name: "Master of Fates", description: "Made 100 story choices", icon: "⚡", rarity: "legendary", requirement: "Make 100 story choices." },
 
 ];

@@ -716,3 +716,41 @@ export const SOCIAL_PROFILES = [
     compatibility: 91
   }
 ]
+
+
+export type BadgeRarity = "common" | "rare" | "epic" | "legendary";
+
+export interface BadgeDefinition {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  rarity: BadgeRarity;
+}
+
+export const BADGE_CATALOG: BadgeDefinition[] = [
+
+  // 🔥 Streak Badges
+  { id: "streak_3", name: "Spark Reader", description: "3 Day Reading Streak", icon: "🔥", rarity: "common" },
+  { id: "streak_7", name: "Flame Keeper", description: "7 Day Reading Streak", icon: "🔥", rarity: "rare" },
+  { id: "streak_30", name: "Inferno Mind", description: "30 Day Reading Streak", icon: "🔥", rarity: "epic" },
+
+  // 📖 Books Created
+  { id: "created_1", name: "First Chapter", description: "Created your first book", icon: "✍️", rarity: "common" },
+  { id: "created_5", name: "Story Architect", description: "Created 5 books", icon: "📚", rarity: "rare" },
+  { id: "created_10", name: "World Builder", description: "Created 10 books", icon: "🌍", rarity: "epic" },
+
+  // 👥 Followers
+  { id: "followers_1", name: "First Signal", description: "Got your first follower", icon: "📡", rarity: "common" },
+  { id: "followers_10", name: "Rising Voice", description: "Reached 10 followers", icon: "📣", rarity: "rare" },
+  { id: "followers_100", name: "Literary Icon", description: "Reached 100 followers", icon: "👑", rarity: "legendary" },
+
+  // ⏳ Reading Time
+  { id: "time_1h", name: "Focused Mind", description: "1 hour of total reading", icon: "⏳", rarity: "common" },
+  { id: "time_1d", name: "Time Traveler", description: "1 full day spent reading", icon: "🕰️", rarity: "epic" },
+
+  // 🧠 Engagement
+  { id: "choices_10", name: "Pathfinder", description: "Made 10 story choices", icon: "🧭", rarity: "common" },
+  { id: "choices_100", name: "Master of Fates", description: "Made 100 story choices", icon: "⚡", rarity: "legendary" },
+
+];

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { UserProfile } from '../types';
 import AvatarPicker from './AvatarPicker';
-import { BADGE_CATALOG } from "../constants";
+import { BADGE_CATALOG, BADGE_RARITY_COLORS } from "../constants";
 
 interface ProfileViewProps {
   user: UserProfile;

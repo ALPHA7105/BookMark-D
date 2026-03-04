@@ -1,7 +1,7 @@
-
 import React, { useState } from 'react';
 import { UserProfile } from '../types';
 import AvatarPicker from './AvatarPicker';
+import { BADGE_CATALOG } from "../constants";
 
 interface ProfileViewProps {
   user: UserProfile;
@@ -192,13 +192,34 @@ const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
               <span className="text-xs font-bold text-white/30 uppercase tracking-widest">{user.badges.length} / 50 Unlocked</span>
             </div>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
-              {user.badges.map(badge => (
-                <div key={badge.id} className={`p-6 rounded-3xl border ${rarityStyles[badge.rarity as keyof typeof rarityStyles]} flex flex-col items-center text-center group transition-all hover:scale-105 hover:shadow-lg`}>
-                  <span className="text-4xl mb-4 group-hover:scale-125 transition-transform drop-shadow-lg">{badge.icon}</span>
-                  <span className="font-black mb-1">{badge.name}</span>
-                  <span className="text-[10px] uppercase tracking-widest opacity-60 font-black">{badge.rarity}</span>
-                </div>
-              ))}
+              {BADGE_CATALOG.map(def => {
+                const unlocked = user.badges.find(b => b.id === def.id);
+              
+                return (
+                  <div
+                    key={def.id}
+                    className={`p-6 rounded-3xl border flex flex-col items-center text-center transition-all duration-500 ${
+                      unlocked
+                        ? rarityStyles[def.rarity]
+                        : "bg-white/5 border-white/5 text-white/20 grayscale opacity-50"
+                    }`}
+                  >
+                    <span className={`text-4xl mb-4 transition-all ${
+                      unlocked ? "drop-shadow-lg" : "blur-[1px]"
+                    }`}>
+                      {def.icon}
+                    </span>
+              
+                    <span className="font-black mb-1">
+                      {def.name}
+                    </span>
+              
+                    <span className="text-[10px] uppercase tracking-widest opacity-60 font-black">
+                      {unlocked ? def.rarity : "Locked"}
+                    </span>
+                  </div>
+                );
+              })}
               <div className="p-6 rounded-3xl border border-dashed border-white/10 flex flex-col items-center justify-center text-white/20 group hover:border-white/20 transition-colors">
                 <span className="text-4xl mb-2 group-hover:scale-110 transition-transform">?</span>
                 <span className="text-[10px] font-black uppercase tracking-widest">Locked</span>

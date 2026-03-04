@@ -206,11 +206,12 @@ const ProfileView: React.FC<ProfileViewProps> = ({ user, onUpdate }) => {
                     onClick={() => setSelectedBadge(def)}
                     style={{
                       borderColor: color,
-                      boxShadow: unlocked ? glow : "none"
+                      boxShadow: unlocked ? glow : "none",
+                      backgroundColor: unlocked ? `${color}20` : undefined
                     }}
                     className={`relative p-6 rounded-3xl border flex flex-col items-center text-center transition-all duration-500 cursor-pointer
                       ${unlocked 
-                        ? "bg-white/10 hover:scale-105" 
+                        ? "hover:scale-105 text-white" 
                         : "bg-white/5 text-white/30 grayscale opacity-60 hover:opacity-80"
                       }`}
                   >

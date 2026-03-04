@@ -178,7 +178,7 @@ const SocialView: React.FC = () => {
     const you = {
       id: 999,
       name: "You",
-      avatar: userAvatar,
+      avatar: getUserAvatar(), 
       achievement: "Read my first book!",
       score: Math.floor(Math.random() * 1200) + 200
     };

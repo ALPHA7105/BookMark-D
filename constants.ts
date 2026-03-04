@@ -2,9 +2,9 @@ import { Book, ShelfTheme, MoodStory, UserProfile } from './types';
 
 export const THEME_CONFIG: Record<ShelfTheme, { color: string; bg: string; border: string; label: string }> = {
   'shorts': {
-    color: 'text-lime-400',        // changed from amber to lime
+    color: 'text-lime-400',
     bg: 'bg-stone-900/40',
-    border: 'border-lime-600/50',  // adjusted border to match new color
+    border: 'border-lime-600/50',
     label: '⚡ Quick Reads'
   },
   'classics': {
@@ -750,19 +750,25 @@ export const BADGE_CATALOG: BadgeDefinition[] = [
   { id: "streak_7", name: "Flame Keeper", description: "7 Day Reading Streak", icon: "🔥", rarity: "rare", requirement: "Read for 7 consecutive days." },
   { id: "streak_30", name: "Inferno Mind", description: "30 Day Reading Streak", icon: "🔥", rarity: "epic", requirement: "Read for 30 consecutive days." },
 
+  // Stories
+  { id: "read_1", name: "Initiated", description: "Read your first book", icon: "🌟", rarity: "common", requirement: "Read 1 book." },
+  { id: "genre_5", name: "Polymath", description: "Read five genres", icon: "🕸", rarity: "rare", requirement: "Read 5 genres." },
+  { id: "genre_5", name: "Velocity", description: "Fast finisher", icon: "🚀", rarity: "rare", requirement: "Read a story in < 1 hour." },
+  { id: "genre_5", name: "Echo", description: "Shared a shelf", icon: "📡", rarity: "common", requirement: "Share 1 shelf." },
+
   // 📖 Books Created
   { id: "created_1", name: "First Chapter", description: "Created your first book", icon: "✍️", rarity: "common", requirement: "Create 1 book." },
   { id: "created_5", name: "Story Architect", description: "Created 5 books", icon: "📚", rarity: "rare", requirement: "Create 5 books." },
   { id: "created_10", name: "World Builder", description: "Created 10 books", icon: "🌍", rarity: "epic", requirement: "Create 10 books." },
 
   // 👥 Followers
-  { id: "followers_1", name: "First Signal", description: "Got your first follower", icon: "📡", rarity: "common", requirement: "Gain 1 follower." },
+  { id: "followers_1", name: "First Signal", description: "Got your first follower", icon: "🙍", rarity: "common", requirement: "Gain 1 follower." },
   { id: "followers_10", name: "Rising Voice", description: "Reached 10 followers", icon: "📣", rarity: "rare", requirement: "Gain 10 followers." },
   { id: "followers_100", name: "Literary Icon", description: "Reached 100 followers", icon: "👑", rarity: "legendary", requirement: "Gain 100 followers." },
 
   // ⏳ Reading Time
-  { id: "time_1h", name: "Focused Mind", description: "1 hour of total reading", icon: "⏳", rarity: "common", requirement: "Read for 1 total hour." },
-  { id: "time_1d", name: "Time Traveler", description: "1 full day spent reading", icon: "🕰️", rarity: "epic", requirement: "Accumulate 24 hours of reading time." },
+  { id: "time_1h", name: "Deep Dive", description: "1 hour of total reading", icon: "🌊", rarity: "common", requirement: "Read for 1 total hour." },
+  { id: "time_1d", name: "Resident", description: "1 full day spent reading", icon: "🔑", rarity: "epic", requirement: "Accumulate 24 hours of reading time." },
 
   // 🧠 Engagement
   { id: "choices_10", name: "Pathfinder", description: "Made 10 story choices", icon: "🧭", rarity: "common", requirement: "Make 10 story choices." },

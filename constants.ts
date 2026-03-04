@@ -731,7 +731,7 @@ export const BADGE_RARITY_GLOW: Record<BadgeRarity, string> = {
   common: "0 0 5px rgba(156,163,175,0.5)",
   rare: "0 0 8px rgba(59,130,246,0.6)",
   epic: "0 0 12px rgba(139,92,246,0.7)",
-  legendary: "0 0 18px rgba(245,158,11,0.9)",
+  legendary: "0 0 25px rgba(245,158,11,0.9)",
 };
 
 export interface BadgeDefinition {
